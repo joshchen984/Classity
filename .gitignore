@@ -1,6 +1,6 @@
 # compiled output
-/dist
-/node_modules
+api/dist
+**/node_modules
 
 # Logs
 logs
@@ -32,3 +32,31 @@ lerna-debug.log*
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+
+
+/.pnp
+.pnp.js
+
+
+# next.js
+frontend/.next/
+frontend/out/
+
+# production
+frontend/build
+
+
+*.pem
+
+
+# local env files
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# vercel
+frontend/.vercel
+
+frontend/firebase-secrets.json
