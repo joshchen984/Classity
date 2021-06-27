@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import Grid from '@material-ui/core/Grid';
@@ -7,6 +7,7 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Pillar from '../components/Pillar';
 import HomePageNav from '../components/HomePageNav';
+import LoginDialog from '../components/LoginDialog';
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -21,7 +22,6 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 'bold',
     '&:hover': {
       backgroundColor: theme.palette.brown.dark,
-
     },
   },
   description: {
@@ -31,9 +31,18 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Home() {
   const classes = useStyles();
+  const [loginDialogOpen, setLoginDialogOpen] = useState<boolean>(false);
+  const [signupDialogOpen, setSignupDialogOpen] = useState<boolean>(false);
   return (
     <>
-      <HomePageNav />
+      <LoginDialog
+        open={loginDialogOpen}
+        onClose={() => setLoginDialogOpen(false)}
+      />
+      <HomePageNav
+        loginHandler={() => setLoginDialogOpen(true)}
+        signupHandler={() => setSignupDialogOpen(true)}
+      />
       <Grid container direction="column" alignItems="center">
         <Grid item>
           <Typography variant="h1" className={classes.title}>
@@ -47,7 +56,9 @@ export default function Home() {
           </Typography>
         </Grid>
         <Grid item>
-          <Button variant="contained" className={classes.getStarted}>Get Started</Button>
+          <Button variant="contained" className={classes.getStarted}>
+            Get Started
+          </Button>
         </Grid>
       </Grid>
       <br />
