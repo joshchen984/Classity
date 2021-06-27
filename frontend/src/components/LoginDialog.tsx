@@ -6,15 +6,22 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import firebaseClient from '../firebaseClient';
 
 type LoginDialogProps = {
   open: boolean;
   onClose: () => void;
 };
 const LoginDialog = ({ open, onClose }: LoginDialogProps) => {
+  firebaseClient();
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-
+  const onSubmitHandler = async () => {
+    // TODO: Set up error handling
+    await firebase.auth().signInWithEmailAndPassword(email, password);
+  };
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
       <DialogTitle>Log in</DialogTitle>
@@ -48,7 +55,7 @@ const LoginDialog = ({ open, onClose }: LoginDialogProps) => {
         <Button color="primary" onClick={onClose}>
           Cancel
         </Button>
-        <Button color="primary">Log in</Button>
+        <Button color="primary" onClick={onSubmitHandler}>Log in</Button>
       </DialogActions>
     </Dialog>
   );
