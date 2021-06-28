@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button';
 import Pillar from '../components/Pillar';
 import HomePageNav from '../components/HomePageNav';
 import LoginDialog from '../components/LoginDialog';
+import SignupDialog from '../components/SignupDialog';
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -38,6 +39,10 @@ export default function Home() {
       <LoginDialog
         open={loginDialogOpen}
         onClose={() => setLoginDialogOpen(false)}
+      />
+      <SignupDialog
+        open={signupDialogOpen}
+        onClose={() => setSignupDialogOpen(false)}
       />
       <HomePageNav
         loginHandler={() => setLoginDialogOpen(true)}

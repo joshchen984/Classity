@@ -6,24 +6,24 @@ import 'firebase/auth';
 import firebaseClient from '../firebaseClient';
 import AuthDialog from './AuthDialog';
 
-type LoginDialogProps = {
+type SignupDialogProps = {
   open: boolean;
   onClose: () => void;
 };
-const LoginDialog = ({ open, onClose }: LoginDialogProps) => {
+const SignupDialog = ({ open, onClose }: SignupDialogProps) => {
   firebaseClient();
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const onSubmitHandler = async () => {
     // TODO: Set up error handling
-    await firebase.auth().signInWithEmailAndPassword(email, password);
+    await firebase.auth().createUserWithEmailAndPassword(email, password);
   };
   return (
     <AuthDialog
       open={open}
       onClose={onClose}
-      title="Log in"
-      submitButtonText="Log in"
+      title="Sign up"
+      submitButtonText="Sign up"
       onSubmitHandler={onSubmitHandler}
     >
       <Grid item>
@@ -51,5 +51,4 @@ const LoginDialog = ({ open, onClose }: LoginDialogProps) => {
     </AuthDialog>
   );
 };
-
-export default LoginDialog;
+export default SignupDialog;
