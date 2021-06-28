@@ -4,8 +4,10 @@ import Head from 'next/head';
 import { AppProps } from 'next/app';
 import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { AuthProvider } from '../auth';
+import { Provider } from 'react-redux';
+import { AuthProvider } from '../auth/auth';
 import theme from '../theme';
+import store from '../app/store';
 
 export default function MyApp(props: AppProps) {
   const { Component, pageProps } = props;
@@ -27,14 +29,15 @@ export default function MyApp(props: AppProps) {
           content="minimum-scale=1, initial-scale=1, width=device-width"
         />
       </Head>
-
-      <ThemeProvider theme={theme}>
-        <AuthProvider>
-          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-          <CssBaseline />
-          <Component {...pageProps} />
-        </AuthProvider>
-      </ThemeProvider>
+      <Provider store={store}>
+        <ThemeProvider theme={theme}>
+          <AuthProvider>
+            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+            <CssBaseline />
+            <Component {...pageProps} />
+          </AuthProvider>
+        </ThemeProvider>
+      </Provider>
     </>
   );
 }

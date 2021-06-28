@@ -1,5 +1,5 @@
 import * as admin from 'firebase-admin';
-import serviceAccount from '../firebase-secrets.json';
+import serviceAccount from '../../firebase-secrets.json';
 
 const verifyIdToken = (token: string) => {
   if (!admin.apps.length) {
