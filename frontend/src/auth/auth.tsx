@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import firebase from 'firebase/app';
 import firebaseClient from './firebaseClient';
 import 'firebase/auth';
-import { login, logout } from "./authSlice";
+import { login, logout } from './authSlice';
 
 type AuthProviderProps = {
   children: React.ReactNode;
