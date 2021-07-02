@@ -1,25 +1,17 @@
-import React from 'react';
-import nookies from 'nookies';
-import { GetServerSideProps } from 'next';
-import firebase from 'firebase/app';
-import verifyIdToken from '../auth/firebaseAdmin';
-import firebaseClient from '../auth/firebaseClient';
+import React, {useEffect} from 'react';
+import withUserAuth from '../hoc/withUserAuth';
 
-const Classes = ({ test }) => {
-  firebaseClient();
-  return <div>{test}</div>;
-};
+type ClassesProps = {
+  token: string;
+}
+const Classes = ({token}: ClassesProps) => {
+  useEffect(() => {
+    const getClasses = async () => {
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  try {
-    const cookies = nookies.get(context);
-    const token = await verifyIdToken(cookies.token);
-    const { uid, email } = token;
-    return {
-      props: {
-        test: `Uid: ${uid}  EMAIL: ${email}`,
-      },
     };
-  } catch {}
+    getClasses();
+  }, []);
+  return <div>{token}</div>;
 };
-export default Classes;
+
+export default withUserAuth(Classes);

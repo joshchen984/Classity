@@ -5,9 +5,9 @@ import { AppProps } from 'next/app';
 import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { Provider } from 'react-redux';
-import { AuthProvider } from '../auth/auth';
 import theme from '../theme';
 import store from '../app/store';
+import AuthProvider from '../auth/auth';
 
 export default function MyApp(props: AppProps) {
   const { Component, pageProps } = props;
@@ -30,13 +30,13 @@ export default function MyApp(props: AppProps) {
         />
       </Head>
       <Provider store={store}>
-        <ThemeProvider theme={theme}>
-          <AuthProvider>
+        <AuthProvider>
+          <ThemeProvider theme={theme}>
             {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
             <CssBaseline />
             <Component {...pageProps} />
-          </AuthProvider>
-        </ThemeProvider>
+          </ThemeProvider>
+        </AuthProvider>
       </Provider>
     </>
   );
