@@ -13,14 +13,9 @@ const withUserAuth = (
     firebaseClient();
     const router = useRouter();
     const loggedIn = useSelector((state) => state.auth.loggedIn);
-    const [mounted, setMounted] = useState<boolean>(false);
     useEffect(() => {
-      if (mounted) {
-        if (!loggedIn) {
-          router.push(redirectRoute);
-        }
-      } else {
-        setMounted(true);
+      if (loggedIn !== undefined && !loggedIn) {
+        router.push(redirectRoute);
       }
     }, [loggedIn]);
     const token = useSelector((state) => state.auth.token);

@@ -1,6 +1,7 @@
 import React from 'react';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import firebase from 'firebase/app';
 
 type ProfileMenuProps = {
   anchorEl: null | HTMLElement;
@@ -10,6 +11,9 @@ type ProfileMenuProps = {
 const ProfileMenu = ({ anchorEl, setAnchorEl }: ProfileMenuProps) => {
   const handleClose = () => {
     setAnchorEl(null);
+  };
+  const logoutHandler = async () => {
+    await firebase.auth().signOut();
   };
   return (
     <Menu
@@ -21,7 +25,7 @@ const ProfileMenu = ({ anchorEl, setAnchorEl }: ProfileMenuProps) => {
       anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       transformOrigin={{ vertical: 'top', horizontal: 'center' }}
     >
-      <MenuItem>Logout</MenuItem>
+      <MenuItem onClick={logoutHandler}>Logout</MenuItem>
     </Menu>
   );
 };

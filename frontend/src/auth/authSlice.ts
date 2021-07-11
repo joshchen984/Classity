@@ -4,18 +4,18 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 type AuthState = {
   token: string;
   email: string;
-  loggedIn: boolean;
+  loggedIn: boolean | undefined;
 };
 const initialState: AuthState = {
   token: '',
   email: '',
-  loggedIn: false,
+  loggedIn: undefined,
 };
 
 type LoginPayload = {
   token: string;
   email: string;
-}
+};
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
