@@ -7,6 +7,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Add from '@material-ui/icons/Add';
+import { useRouter } from 'next/router';
 import ProfileMenu from './ProfileMenu';
 
 function ElevationScroll({ children }: { children: React.ReactElement }) {
@@ -26,12 +27,20 @@ const useStyles = makeStyles((theme) => ({
 }));
 const LoggedInNav = () => {
   const classes = useStyles();
+  const router = useRouter();
   const [profileAnchorEl, setProfileAnchorEl] = useState<null | HTMLElement>(
     null
   );
 
   const profileIconClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     setProfileAnchorEl(e.currentTarget);
+  };
+  const addIconClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    // TODO: Make create assignment route that gets pushed here
+    if (router.pathname === '/classes/classid' && false) {
+    } else {
+      router.push('/create/class');
+    }
   };
 
   return (
@@ -46,7 +55,7 @@ const LoggedInNav = () => {
                 </IconButton>
               </Grid>
               <Grid item>
-                <IconButton color="inherit">
+                <IconButton color="inherit" onClick={addIconClickHandler}>
                   <Add />
                 </IconButton>
               </Grid>
