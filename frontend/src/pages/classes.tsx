@@ -12,4 +12,4 @@ const Classes = ({ token }: ClassesProps) => {
   return <div>{token}</div>;
 };
 
-export default withUserAuth(Classes);
+export default withUserAuth(Classes, '/');
