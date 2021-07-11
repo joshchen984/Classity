@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import withUserAuth from '../hoc/withUserAuth';
+import LoggedInNav from '../components/LoggedInNav';
 
 type ClassesProps = {
   token: string;
@@ -9,7 +10,12 @@ const Classes = ({ token }: ClassesProps) => {
     const getClasses = async () => {};
     getClasses();
   }, []);
-  return <div>{token}</div>;
+  return (
+    <>
+      <LoggedInNav />
+      <div>{token}</div>
+    </>
+  );
 };
 
 export default withUserAuth(Classes, '/');
