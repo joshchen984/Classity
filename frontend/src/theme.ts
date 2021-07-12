@@ -49,6 +49,14 @@ const theme = createMuiTheme({
     h1: {
       fontFamily: 'Montserrat',
       fontWeight: 'bold',
+      fontSize: '4rem',
+      color: darkBlue,
+    },
+    h2: {
+      fontFamily: 'Montserrat',
+      fontWeight: 'bold',
+      fontSize: '3rem',
+      color: darkBlue,
     },
     subtitle1: {
       fontFamily: 'Montserrat',

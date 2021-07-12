@@ -12,9 +12,7 @@ import SignupDialog from '../components/SignupDialog';
 
 const useStyles = makeStyles((theme) => ({
   title: {
-    color: theme.palette.darkBlue.main,
     textAlign: 'center',
-    fontSize: '3rem',
   },
   getStarted: {
     borderRadius: '50em',

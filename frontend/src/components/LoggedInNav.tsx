@@ -24,6 +24,9 @@ const useStyles = makeStyles((theme) => ({
   icons: {
     color: 'black',
   },
+  navSpacing: {
+    marginBottom: '4.6em',
+  },
 }));
 const LoggedInNav = () => {
   const classes = useStyles();
@@ -63,6 +66,7 @@ const LoggedInNav = () => {
           </Toolbar>
         </AppBar>
       </ElevationScroll>
+      <div className={classes.navSpacing} />
       <ProfileMenu
         anchorEl={profileAnchorEl}
         setAnchorEl={setProfileAnchorEl}

@@ -8,6 +8,7 @@ import { Provider } from 'react-redux';
 import theme from '../theme';
 import store from '../app/store';
 import AuthProvider from '../auth/auth';
+import '../styles/globals.css';
 
 export default function MyApp(props: AppProps) {
   const { Component, pageProps } = props;

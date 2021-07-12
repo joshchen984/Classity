@@ -9,3 +9,7 @@ body {
 *::after {
   box-sizing: border-box;
 }
+
+hr {
+  border-color: #c4c4c4;
+}
