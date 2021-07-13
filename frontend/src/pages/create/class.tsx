@@ -26,6 +26,8 @@ const CreateClass = () => {
   const [grades, setGrades] = useState<number[]>([100]);
   const [assignmentType, setAssignmentType] = useState<string>('');
   const [grade, setGrade] = useState<number>(100);
+  const [classTitle, setClassTitle] = useState<string>('');
+  const [teacher, setTeacher] = useState<string>('');
 
   const createAssignmentHandler = () => {
     const totalGrade = grades.reduce(
@@ -48,10 +50,22 @@ const CreateClass = () => {
           <hr />
         </Grid>
         <Grid item>
-          <TextField type="text" label="Class Name" required fullWidth />
+          <TextField
+            type="text"
+            label="Class Name"
+            required
+            fullWidth
+            onChange={(e) => setClassTitle(e.target.value)}
+          />
         </Grid>
         <Grid item>
-          <TextField type="text" label="Teacher Name" required fullWidth />
+          <TextField
+            type="text"
+            label="Teacher Name"
+            required
+            fullWidth
+            onChange={(e) => setTeacher(e.target.value)}
+          />
         </Grid>
         <Grid item>
           <Typography variant="h2">Grades</Typography>

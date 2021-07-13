@@ -59,4 +59,4 @@ frontend/build
 # vercel
 frontend/.vercel
 
-frontend/firebase-secrets.json
+firebase-secrets.json
