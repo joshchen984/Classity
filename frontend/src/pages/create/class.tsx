@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
@@ -20,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '50em',
   },
 }));
+
 const CreateClass = () => {
   const classes = useStyles();
   const [assignmentTypes, setAssignmentTypes] = useState<string[]>(['Total']);
@@ -28,15 +30,51 @@ const CreateClass = () => {
   const [grade, setGrade] = useState<number>(100);
   const [classTitle, setClassTitle] = useState<string>('');
   const [teacher, setTeacher] = useState<string>('');
-
+  const [error, setError] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<{ [key: string]: string }>(
+    {}
+  );
   const createAssignmentHandler = () => {
+    let isError = false;
+    if (assignmentType === '') {
+      isError = true;
+      setError(true);
+      setErrorMessage((prevState) => ({
+        ...prevState,
+        assignmentType: "Assignment Type can't be empty",
+      }));
+    }
     const totalGrade = grades.reduce(
       (total: number, curGrade: number) => total + curGrade,
       0
     );
-    if (totalGrade + grade <= 200) {
+    if (totalGrade + grade > 200) {
+      isError = true;
+      setError(true);
+      setErrorMessage((prevState) => ({
+        ...prevState,
+        grade: "The total grade can't be over 100",
+      }));
+    }
+    if (!isError) {
       setAssignmentTypes((prevState) => [assignmentType, ...prevState]);
       setGrades((prevState) => [grade, ...prevState]);
+      setErrorMessage({});
+    }
+  };
+  const createClassHandler = async () => {
+    try {
+      await axios.post('/api/class', {
+        name: classTitle,
+        teacher,
+        assignmentTypes: assignmentTypes.map((assignmentType, i) => ({
+          name: assignmentType,
+          percentOfGrade: grades[i],
+          currentGrade: grades[i],
+        })),
+      });
+    } catch (e) {
+      console.log(e);
     }
   };
   return (
@@ -78,6 +116,8 @@ const CreateClass = () => {
               fullWidth
               value={assignmentType}
               onChange={(e) => setAssignmentType(e.target.value)}
+              error={!!errorMessage.assignmentType}
+              helperText={errorMessage.assignmentType}
             />
           </Grid>
           <Grid item xs={2}>
@@ -87,6 +127,8 @@ const CreateClass = () => {
               fullWidth
               value={grade}
               onChange={(e) => setGrade(parseInt(e.target.value))}
+              error={!!errorMessage.grade}
+              helperText={errorMessage.grade}
             />
           </Grid>
         </Grid>
@@ -108,6 +150,7 @@ const CreateClass = () => {
             variant="contained"
             color="primary"
             className={classes.addClassButton}
+            onClick={createClassHandler}
           >
             Add Class
           </Button>
