@@ -4,6 +4,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { Class } from './class/class.entity';
 import { ClassModule } from './class/class.module';
+import { AuthModule } from './auth/auth.module';
+import { User } from './auth/user.entity';
 
 @Module({
   imports: [
@@ -11,9 +13,11 @@ import { ClassModule } from './class/class.module';
       type: 'mongodb',
       url: 'mongodb://localhost/classity',
       useUnifiedTopology: true,
-      entities: [Class],
+      synchronize: true,
+      entities: [Class, User],
     }),
     ClassModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

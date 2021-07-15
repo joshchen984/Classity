@@ -1,5 +1,11 @@
 import { IsNumber, IsString, MinLength } from 'class-validator';
-import { Column, Entity, ObjectIdColumn, PrimaryColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ObjectID,
+  ObjectIdColumn,
+  PrimaryColumn,
+} from 'typeorm';
 
 export class assignmentType {
   @IsString()
@@ -16,10 +22,7 @@ export class assignmentType {
 @Entity()
 export class Class {
   @ObjectIdColumn()
-  _id: string;
-
-  @PrimaryColumn()
-  id: string;
+  id: ObjectID;
 
   @Column()
   name: string;

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Class } from './class.entity';
@@ -20,5 +20,15 @@ export class ClassService {
       assignmentTypes,
     });
     return this.classRepository.save(newClass);
+  }
+
+  async getClass(id: string) {
+    const foundClass = await this.classRepository.findOne({
+      where: { id },
+    });
+    if (!foundClass) {
+      throw new NotFoundException();
+    }
+    return foundClass;
   }
 }
