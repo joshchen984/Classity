@@ -1,5 +1,5 @@
-import { assignmentType } from './class.entity';
-import { IsArray, MinLength, ValidateNested } from 'class-validator';
+import { assignmentType } from './class.document';
+import { IsArray, IsString, MinLength, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class CreateClassDto {
@@ -13,4 +13,7 @@ export class CreateClassDto {
   @ValidateNested({ each: true })
   @Type(() => assignmentType)
   assignmentTypes: assignmentType[];
+
+  @IsString()
+  userId: string;
 }

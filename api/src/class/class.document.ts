@@ -1,11 +1,5 @@
 import { IsNumber, IsString, MinLength } from 'class-validator';
-import {
-  Column,
-  Entity,
-  ObjectID,
-  ObjectIdColumn,
-  PrimaryColumn,
-} from 'typeorm';
+import { Column } from 'typeorm';
 
 export class assignmentType {
   @IsString()
@@ -19,11 +13,7 @@ export class assignmentType {
   currentGrade: number;
 }
 
-@Entity()
 export class Class {
-  @ObjectIdColumn()
-  id: ObjectID;
-
   @Column()
   name: string;
 
@@ -32,4 +22,14 @@ export class Class {
 
   @Column()
   assignmentTypes: assignmentType[];
+
+  constructor(
+    name: string,
+    teacher: string,
+    assignmentTypes: assignmentType[],
+  ) {
+    this.name = name;
+    this.teacher = teacher;
+    this.assignmentTypes = assignmentTypes;
+  }
 }

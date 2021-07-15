@@ -11,8 +11,8 @@ export class ClassController {
     return this.classService.createClass(createClassDto);
   }
 
-  @Get('/:id')
-  getClassById(@Param('id') id: string) {
-    return this.classService.getClass(id);
-  }
+  // @Get('/:id')
+  // getClassById(@Param('id') id: string) {
+  //   return this.classService.getClass(id);
+  // }
 }

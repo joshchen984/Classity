@@ -1,34 +1,41 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { Class } from './class.entity';
-import { v4 as uuid } from 'uuid';
+import { MongoRepository } from 'typeorm';
 import { CreateClassDto } from './create-class.dto';
+import { User } from 'src/auth/user.entity';
+import { Class } from './class.document';
+import { ObjectId } from 'mongodb';
 
 @Injectable()
 export class ClassService {
   constructor(
-    @InjectRepository(Class) private classRepository: Repository<Class>,
+    @InjectRepository(User) private userRepository: MongoRepository<User>,
   ) {}
 
-  createClass(createClassDto: CreateClassDto) {
-    const { name, teacher, assignmentTypes } = createClassDto;
-    const newClass = this.classRepository.create({
-      id: uuid(),
-      name,
-      teacher,
-      assignmentTypes,
-    });
-    return this.classRepository.save(newClass);
+  async createClass(createClassDto: CreateClassDto) {
+    const { name, teacher, assignmentTypes, userId } = createClassDto;
+    const newClass = new Class(name, teacher, assignmentTypes);
+    const { result } = await this.userRepository.updateOne(
+      { id: userId },
+      { $push: { classes: newClass } },
+    );
+    if (result.nModified === 0) {
+      throw new UnauthorizedException();
+    }
+    return newClass;
   }
 
-  async getClass(id: string) {
-    const foundClass = await this.classRepository.findOne({
-      where: { id },
-    });
-    if (!foundClass) {
-      throw new NotFoundException();
-    }
-    return foundClass;
-  }
+  // async getClass(id: string) {
+  //   const foundClass = await this.classRepository.findOne({
+  //     where: { id },
+  //   });
+  //   if (!foundClass) {
+  //     throw new NotFoundException();
+  //   }
+  //   return foundClass;
+  // }
 }
