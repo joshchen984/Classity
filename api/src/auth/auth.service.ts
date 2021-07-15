@@ -2,18 +2,23 @@ import {
   ConflictException,
   Injectable,
   InternalServerErrorException,
+  OnApplicationBootstrap,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './create-user.dto';
 import { User } from './user.entity';
 import { v4 as uuid } from 'uuid';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
-export class AuthService {
+export class AuthService implements OnApplicationBootstrap {
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>,
+    private configService: ConfigService,
   ) {}
+
+  onApplicationBootstrap() {}
 
   async signUp(createUserDto: CreateUserDto) {
     const { email } = createUserDto;

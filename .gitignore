@@ -60,3 +60,4 @@ frontend/build
 frontend/.vercel
 
 firebase-secrets.json
+.env.*
