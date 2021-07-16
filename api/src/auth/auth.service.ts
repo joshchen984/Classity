@@ -3,6 +3,7 @@ import {
   Injectable,
   InternalServerErrorException,
   OnApplicationBootstrap,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -10,6 +11,7 @@ import { CreateUserDto } from './create-user.dto';
 import { User } from './user.entity';
 import { v4 as uuid } from 'uuid';
 import { ConfigService } from '@nestjs/config';
+import * as admin from 'firebase-admin';
 
 @Injectable()
 export class AuthService implements OnApplicationBootstrap {
@@ -18,7 +20,19 @@ export class AuthService implements OnApplicationBootstrap {
     private configService: ConfigService,
   ) {}
 
-  onApplicationBootstrap() {}
+  onApplicationBootstrap() {
+    const firebaseOptions: admin.AppOptions = {
+      credential: admin.credential.cert({
+        projectId: this.configService.get('FIREBASE_PROJECT_ID'),
+        privateKey: this.configService
+          .get('FIREBASE_PRIVATE_KEY')
+          .replace(/\\n/g, '\n'),
+        clientEmail: this.configService.get('FIREBASE_CLIENT_EMAIL'),
+      }),
+      databaseURL: 'https://classity-daac0-default-rtdb.firebaseio.com',
+    };
+    admin.initializeApp(firebaseOptions);
+  }
 
   async signUp(createUserDto: CreateUserDto) {
     const { email } = createUserDto;
@@ -35,5 +49,14 @@ export class AuthService implements OnApplicationBootstrap {
       }
     }
     return createdUser;
+  }
+
+  async verifyIdToken(token: string) {
+    try {
+      const { email, uid } = await admin.auth().verifyIdToken(token, true);
+      return { email, uid };
+    } catch (e) {
+      throw new UnauthorizedException();
+    }
   }
 }
