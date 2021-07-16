@@ -11,7 +11,7 @@ export class RolesGuard implements CanActivate {
   isValidRole(role: Role, request: Request): boolean {
     switch (role) {
       case 'User':
-        if ((request as any).id) {
+        if ((request as any).userId) {
           return true;
         } else {
           return false;
@@ -23,6 +23,9 @@ export class RolesGuard implements CanActivate {
 
   canActivate(context: ExecutionContext) {
     const roles = this.reflector.get<Role[]>('roles', context.getHandler());
+    if (roles === undefined) {
+      return true;
+    }
     const request: Request = context.switchToHttp().getRequest();
     for (const role of roles) {
       if (this.isValidRole(role, request)) {

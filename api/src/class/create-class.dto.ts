@@ -13,7 +13,4 @@ export class CreateClassDto {
   @ValidateNested({ each: true })
   @Type(() => assignmentType)
   assignmentTypes: assignmentType[];
-
-  @IsString()
-  userId: string;
 }

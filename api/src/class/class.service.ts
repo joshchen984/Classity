@@ -16,8 +16,8 @@ export class ClassService {
     @InjectRepository(User) private userRepository: MongoRepository<User>,
   ) {}
 
-  async createClass(createClassDto: CreateClassDto) {
-    const { name, teacher, assignmentTypes, userId } = createClassDto;
+  async createClass(createClassDto: CreateClassDto, userId: string) {
+    const { name, teacher, assignmentTypes } = createClassDto;
     const newClass = new Class(name, teacher, assignmentTypes);
     const { result } = await this.userRepository.updateOne(
       { id: userId },
@@ -29,13 +29,8 @@ export class ClassService {
     return newClass;
   }
 
-  // async getClass(id: string) {
-  //   const foundClass = await this.classRepository.findOne({
-  //     where: { id },
-  //   });
-  //   if (!foundClass) {
-  //     throw new NotFoundException();
-  //   }
-  //   return foundClass;
-  // }
+  async getUserClasses(userId: string) {
+    const user = await this.userRepository.findOne({ id: userId });
+    return user.classes;
+  }
 }

@@ -34,9 +34,9 @@ export class AuthService implements OnApplicationBootstrap {
     admin.initializeApp(firebaseOptions);
   }
 
-  async signUp(createUserDto: CreateUserDto) {
+  async signUp(createUserDto: CreateUserDto, userId: string) {
     const { email } = createUserDto;
-    const user = this.userRepository.create({ email, id: uuid() });
+    const user = this.userRepository.create({ email, id: userId });
     let createdUser: User;
     try {
       createdUser = await this.userRepository.save(user);

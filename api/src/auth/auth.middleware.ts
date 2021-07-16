@@ -13,7 +13,7 @@ export class AuthMiddleware implements NestMiddleware {
       return next();
     }
     const { uid, email } = await this.authService.verifyIdToken(bearerToken);
-    (req as any).id = uid;
+    (req as any).userId = uid;
     next();
   }
 }
