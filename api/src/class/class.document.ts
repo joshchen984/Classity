@@ -1,17 +1,5 @@
-import { IsNumber, IsString, MinLength } from 'class-validator';
 import { Column } from 'typeorm';
-
-export class assignmentType {
-  @IsString()
-  @MinLength(1)
-  name: string;
-
-  @IsNumber()
-  percentOfGrade: number;
-
-  @IsNumber()
-  currentGrade: number;
-}
+import { assignmentType } from 'classity-dto';
 
 export class Class {
   @Column()

@@ -2,7 +2,7 @@ import { Body, Controller, Post, Get, Param } from '@nestjs/common';
 import { Roles } from 'src/auth/roles.decorator';
 import { UserId } from 'src/auth/userid.decorator';
 import { ClassService } from './class.service';
-import { CreateClassDto } from './create-class.dto';
+import { CreateClassDto } from 'classity-dto';
 
 @Controller('class')
 export class ClassController {

@@ -8,4 +8,7 @@ export const postApi = async (route: string, data: any, token: string) => {
   return res;
 };
 
-export const getApi = () => {};
+export const getApi = async (route: string, token: string) => {
+  const res = await axios.get(route, getAuthHeader(token));
+  return res;
+};

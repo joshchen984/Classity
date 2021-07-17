@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CreateUserDto } from './create-user.dto';
+import { CreateUserDto } from 'classity-dto';
 import { User } from './user.entity';
 import { v4 as uuid } from 'uuid';
 import { ConfigService } from '@nestjs/config';
