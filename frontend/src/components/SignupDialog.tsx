@@ -5,6 +5,7 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import firebaseClient from '../auth/firebaseClient';
 import AuthDialog from './AuthDialog';
+import { postApi } from '../app/requestApi';
 
 type SignupDialogProps = {
   open: boolean;
@@ -16,7 +17,11 @@ const SignupDialog = ({ open, onClose }: SignupDialogProps) => {
   const [password, setPassword] = useState<string>('');
   const onSubmitHandler = async () => {
     // TODO: Set up error handling
-    await firebase.auth().createUserWithEmailAndPassword(email, password);
+    const { user } = await firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password);
+    const token: string = await user?.getIdToken();
+    await postApi('/api/auth/signup', { email }, token);
   };
   return (
     <AuthDialog

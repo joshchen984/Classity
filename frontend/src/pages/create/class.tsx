@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
@@ -7,6 +6,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import LoggedInNav from '../../components/LoggedInNav';
 import CreateClassChart from '../../components/CreateClassChart';
+import { postApi } from '../../app/requestApi';
+import withUserAuth from '../../hoc/withUserAuth';
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -22,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CreateClass = () => {
+const CreateClass = ({ token }) => {
   const classes = useStyles();
   const [assignmentTypes, setAssignmentTypes] = useState<string[]>(['Total']);
   const [grades, setGrades] = useState<number[]>([100]);
@@ -64,15 +65,19 @@ const CreateClass = () => {
   };
   const createClassHandler = async () => {
     try {
-      await axios.post('/api/class', {
-        name: classTitle,
-        teacher,
-        assignmentTypes: assignmentTypes.map((assignmentType, i) => ({
-          name: assignmentType,
-          percentOfGrade: grades[i],
-          currentGrade: grades[i],
-        })),
-      });
+      await postApi(
+        '/api/class',
+        {
+          name: classTitle,
+          teacher,
+          assignmentTypes: assignmentTypes.map((assignmentType, i) => ({
+            name: assignmentType,
+            percentOfGrade: grades[i],
+            currentGrade: grades[i],
+          })),
+        },
+        token
+      );
     } catch (e) {
       console.log(e);
     }
@@ -160,4 +165,4 @@ const CreateClass = () => {
   );
 };
 
-export default CreateClass;
+export default withUserAuth(CreateClass, '/');
