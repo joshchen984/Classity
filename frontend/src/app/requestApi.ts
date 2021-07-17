@@ -5,10 +5,10 @@ const getAuthHeader = (token: string) => ({
 });
 export const postApi = async (route: string, data: any, token: string) => {
   const res = await axios.post(route, data, getAuthHeader(token));
-  return res;
+  return res.data;
 };
 
 export const getApi = async (route: string, token: string) => {
   const res = await axios.get(route, getAuthHeader(token));
-  return res;
+  return res.data;
 };

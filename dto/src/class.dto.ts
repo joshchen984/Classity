@@ -31,3 +31,16 @@ export class CreateClassDto {
   @Type(() => assignmentType)
   assignmentTypes: assignmentType[];
 }
+
+export class Class {
+  @MinLength(1)
+  name: string;
+
+  @MinLength(1)
+  teacher: string;
+
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => assignmentType)
+  assignmentTypes: assignmentType[];
+}
