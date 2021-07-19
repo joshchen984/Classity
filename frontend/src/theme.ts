@@ -43,9 +43,11 @@ const theme = createMuiTheme({
       main: brown,
       light: '#c37b33',
       dark: '#5c2500',
+      contrastText: 'white',
     },
   },
   typography: {
+    fontFamily: 'Montserrat',
     h1: {
       fontFamily: 'Montserrat',
       fontWeight: 'bold',
@@ -66,6 +68,9 @@ const theme = createMuiTheme({
       fontFamily: 'Montserrat',
       fontWeight: 'bold',
       textTransform: 'none',
+    },
+    subtitle2: {
+      fontSize: '1.3rem',
     },
   },
 });
