@@ -32,6 +32,22 @@ const Classes = ({ token }: ClassesProps) => {
       getClasses();
     }
   }, [token]);
+  let userClassesComponents = null;
+  if (userClasses) {
+    userClassesComponents = userClasses.map((userClass) => (
+      <ClassComponent
+        title={userClass.name}
+        teacher={userClass.teacher}
+        classLink={`/classes/${userClass.id}`}
+        grade={
+          userClass.assignmentTypes[userClass.assignmentTypes.length - 1]
+            .currentGrade
+        }
+        numGrades={5}
+        key={userClass.id}
+      />
+    ));
+  }
   return (
     <>
       <LoggedInNav />
@@ -42,20 +58,7 @@ const Classes = ({ token }: ClassesProps) => {
         <Grid item>
           <hr />
         </Grid>
-        <Grid item>
-          {userClasses?.map((userClass) => (
-            <ClassComponent
-              title={userClass.name}
-              teacher={userClass.teacher}
-              classLink={'/classes/3'}
-              grade={
-                userClass.assignmentTypes[userClass.assignmentTypes.length - 1]
-                  .currentGrade
-              }
-              numGrades={5}
-            />
-          ))}
-        </Grid>
+        <Grid item>{userClassesComponents}</Grid>
       </Grid>
     </>
   );

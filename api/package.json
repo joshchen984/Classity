@@ -21,7 +21,6 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
-    "classity-dto": "file:../dto",
     "@nestjs/common": "^8.0.0",
     "@nestjs/config": "^1.0.0",
     "@nestjs/core": "^8.0.0",
@@ -30,6 +29,7 @@
     "@types/mongodb": "^3.6.20",
     "class-transformer": "^0.4.0",
     "class-validator": "^0.13.1",
+    "classity-dto": "file:../dto",
     "firebase-admin": "^9.10.0",
     "mongodb": "^3.6.10",
     "reflect-metadata": "^0.1.13",
@@ -46,6 +46,7 @@
     "@types/jest": "^26.0.24",
     "@types/node": "^16.0.0",
     "@types/supertest": "^2.0.11",
+    "@types/uuid": "^8.3.1",
     "@typescript-eslint/eslint-plugin": "^4.28.2",
     "@typescript-eslint/parser": "^4.28.2",
     "eslint": "^7.30.0",

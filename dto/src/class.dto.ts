@@ -36,6 +36,9 @@ export class Class {
   @MinLength(1)
   name: string;
 
+  @IsString()
+  id: string;
+
   @MinLength(1)
   teacher: string;
 

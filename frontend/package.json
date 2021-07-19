@@ -9,20 +9,21 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "classity-dto": "file:../dto",
     "@material-ui/core": "^4.11.4",
     "@material-ui/icons": "^4.11.2",
     "@material-ui/styles": "^4.11.4",
     "@reduxjs/toolkit": "^1.6.0",
     "axios": "^0.21.1",
     "chart.js": "^3.4.1",
+    "classity-dto": "file:../dto",
     "firebase": "^8.6.8",
     "firebase-admin": "^9.10.0",
     "next": "11.0.1",
     "react": "17.0.2",
     "react-chartjs-2": "^3.0.3",
     "react-dom": "17.0.2",
-    "react-redux": "^7.2.4"
+    "react-redux": "^7.2.4",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@types/react": "17.0.11",

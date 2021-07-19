@@ -1,7 +1,11 @@
 import { Column } from 'typeorm';
 import { assignmentType } from 'classity-dto';
+import { v4 as uuid } from 'uuid';
 
 export class Class {
+  @Column()
+  id: string;
+
   @Column()
   name: string;
 
@@ -19,5 +23,6 @@ export class Class {
     this.name = name;
     this.teacher = teacher;
     this.assignmentTypes = assignmentTypes;
+    this.id = uuid();
   }
 }
