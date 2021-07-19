@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Get, Param } from '@nestjs/common';
+import { Body, Controller, Post, Get, Param, Delete } from '@nestjs/common';
 import { Roles } from 'src/auth/roles.decorator';
 import { UserId } from 'src/auth/userid.decorator';
 import { ClassService } from './class.service';
@@ -21,6 +21,12 @@ export class ClassController {
   @Get()
   getUserClasses(@UserId() userId: string) {
     return this.classService.getUserClasses(userId);
+  }
+
+  @Roles('User')
+  @Delete('/:id')
+  deleteClassById(@Param('id') id: string, @UserId() userId: string) {
+    return this.classService.deleteClassById(id, userId);
   }
   // @Get('/:id')
   // getClassById(@Param('id') id: string) {

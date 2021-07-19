@@ -4,6 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import { useRouter } from 'next/router';
 import LoggedInNav from '../../components/LoggedInNav';
 import CreateClassChart from '../../components/CreateClassChart';
 import { postApi } from '../../app/requestApi';
@@ -24,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CreateClass = ({ token }) => {
+  const router = useRouter();
   const classes = useStyles();
   const [assignmentTypes, setAssignmentTypes] = useState<string[]>(['Total']);
   const [grades, setGrades] = useState<number[]>([100]);
@@ -78,6 +80,7 @@ const CreateClass = ({ token }) => {
         },
         token
       );
+      router.push('/classes');
     } catch (e) {
       console.log(e);
     }

@@ -29,8 +29,16 @@ type ClassProps = {
   numGrades: number;
   grade: number;
   classLink: string;
+  unenrollHandler: () => void;
 };
-const Class = ({ title, teacher, numGrades, grade, classLink }: ClassProps) => {
+const Class = ({
+  title,
+  teacher,
+  numGrades,
+  grade,
+  classLink,
+  unenrollHandler,
+}: ClassProps) => {
   const classes = useStyles();
   const theme = useTheme();
   return (
@@ -61,7 +69,7 @@ const Class = ({ title, teacher, numGrades, grade, classLink }: ClassProps) => {
           <Typography variant="subtitle1">grades</Typography>
         </Grid>
         <Grid item>
-          <RoundButton color={theme.palette.brown} onClick={() => undefined}>
+          <RoundButton color={theme.palette.brown} onClick={unenrollHandler}>
             Unenroll
           </RoundButton>
         </Grid>

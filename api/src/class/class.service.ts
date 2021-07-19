@@ -33,4 +33,14 @@ export class ClassService {
     const user = await this.userRepository.findOne({ id: userId });
     return user.classes;
   }
+
+  async deleteClassById(id: string, userId: string) {
+    const { result } = await this.userRepository.updateOne(
+      { id: userId },
+      { $pull: { classes: { id } } },
+    );
+    if (result.nModified === 0) {
+      throw new UnauthorizedException();
+    }
+  }
 }
