@@ -17,6 +17,5 @@ jobs:
         with:
           node-version: "16"
           cache: "npm"
-      - run: cd api
       - run: npm install
       - run: npm test
