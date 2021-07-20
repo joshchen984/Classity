@@ -6,15 +6,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import { useRouter } from 'next/router';
 import LoggedInNav from '../../components/LoggedInNav';
-import CreateClassChart from '../../components/CreateClassChart';
+import ClassChart from '../../components/ClassChart';
 import { postApi } from '../../app/requestApi';
 import withUserAuth from '../../hoc/withUserAuth';
+import Layout from '../../components/Layout';
 
 const useStyles = makeStyles((theme) => ({
-  main: {
-    maxWidth: 757,
-    margin: 'auto',
-  },
   assignmentTypeButton: {
     borderRadius: '50em',
     margin: '1em 0',
@@ -88,82 +85,84 @@ const CreateClass = ({ token }) => {
   return (
     <>
       <LoggedInNav />
-      <Grid container className={classes.main} direction="column">
-        <Grid item>
-          <Typography variant="h1">Add a Class</Typography>
-        </Grid>
-        <Grid item>
-          <hr />
-        </Grid>
-        <Grid item>
-          <TextField
-            type="text"
-            label="Class Name"
-            required
-            fullWidth
-            onChange={(e) => setClassTitle(e.target.value)}
-          />
-        </Grid>
-        <Grid item>
-          <TextField
-            type="text"
-            label="Teacher Name"
-            required
-            fullWidth
-            onChange={(e) => setTeacher(e.target.value)}
-          />
-        </Grid>
-        <Grid item>
-          <Typography variant="h2">Grades</Typography>
-        </Grid>
-        <Grid container item spacing={3}>
-          <Grid item xs={10}>
+      <Layout>
+        <Grid container direction="column">
+          <Grid item>
+            <Typography variant="h1">Add a Class</Typography>
+          </Grid>
+          <Grid item>
+            <hr />
+          </Grid>
+          <Grid item>
             <TextField
               type="text"
-              label="Assignment Type"
+              label="Class Name"
+              required
               fullWidth
-              value={assignmentType}
-              onChange={(e) => setAssignmentType(e.target.value)}
-              error={!!errorMessage.assignmentType}
-              helperText={errorMessage.assignmentType}
+              onChange={(e) => setClassTitle(e.target.value)}
             />
           </Grid>
-          <Grid item xs={2}>
+          <Grid item>
             <TextField
-              type="number"
-              label="% of Grade"
+              type="text"
+              label="Teacher Name"
+              required
               fullWidth
-              value={grade}
-              onChange={(e) => setGrade(parseInt(e.target.value))}
-              error={!!errorMessage.grade}
-              helperText={errorMessage.grade}
+              onChange={(e) => setTeacher(e.target.value)}
             />
           </Grid>
+          <Grid item>
+            <Typography variant="h2">Grades</Typography>
+          </Grid>
+          <Grid container item spacing={3}>
+            <Grid item xs={10}>
+              <TextField
+                type="text"
+                label="Assignment Type"
+                fullWidth
+                value={assignmentType}
+                onChange={(e) => setAssignmentType(e.target.value)}
+                error={!!errorMessage.assignmentType}
+                helperText={errorMessage.assignmentType}
+              />
+            </Grid>
+            <Grid item xs={2}>
+              <TextField
+                type="number"
+                label="% of Grade"
+                fullWidth
+                value={grade}
+                onChange={(e) => setGrade(parseInt(e.target.value))}
+                error={!!errorMessage.grade}
+                helperText={errorMessage.grade}
+              />
+            </Grid>
+          </Grid>
+          <Grid item container justify="center">
+            <Button
+              variant="outlined"
+              color="primary"
+              className={classes.assignmentTypeButton}
+              onClick={createAssignmentHandler}
+            >
+              Create Assignment Type
+            </Button>
+          </Grid>
+          <Grid item>
+            <ClassChart labels={assignmentTypes} grades={grades} />
+          </Grid>
+          <Grid item container justify="center" alignItems="center">
+            <Button
+              variant="contained"
+              color="primary"
+              className={classes.addClassButton}
+              onClick={createClassHandler}
+            >
+              Add Class
+            </Button>
+          </Grid>
         </Grid>
-        <Grid item container justify="center">
-          <Button
-            variant="outlined"
-            color="primary"
-            className={classes.assignmentTypeButton}
-            onClick={createAssignmentHandler}
-          >
-            Create Assignment Type
-          </Button>
-        </Grid>
-        <Grid item>
-          <CreateClassChart labels={assignmentTypes} grades={grades} />
-        </Grid>
-        <Grid item container justify="center" alignItems="center">
-          <Button
-            variant="contained"
-            color="primary"
-            className={classes.addClassButton}
-            onClick={createClassHandler}
-          >
-            Add Class
-          </Button>
-        </Grid>
-      </Grid>
+      </Layout>
     </>
   );
 };

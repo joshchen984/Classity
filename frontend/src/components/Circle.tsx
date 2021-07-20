@@ -16,9 +16,14 @@ const useStyles = makeStyles((theme) => ({
     height: '3em',
     fontSize: 35,
   },
+  large: {
+    width: '5em',
+    height: '5em',
+    fontSize: 35,
+  },
 }));
 type CircleProps = {
-  size: 'medium';
+  size: 'medium' | 'large';
   children: React.ReactNode;
 };
 const Circle = ({ size, children }: CircleProps) => {

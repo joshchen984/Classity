@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
   class: {
     border: '1px solid #C4C4C4',
     padding: '1rem',
+    margin: '1rem 0',
   },
   title: {
     fontSize: '1.5rem',
