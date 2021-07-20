@@ -1,4 +1,4 @@
-import { Class } from 'src/class/class.document';
+import { Class } from '../class/class.document';
 import { Column, Entity, ObjectIdColumn, ObjectID, Index } from 'typeorm';
 
 @Entity()

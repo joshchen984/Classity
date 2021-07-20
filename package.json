@@ -1,0 +1,15 @@
+{
+    "name": "@classity/monorepo",
+    "version": "1.0.0",
+    "workspaces": {
+        "packages": [
+            "dto",
+            "frontend",
+            "api"
+        ]
+    },
+    "scripts": {
+        "test": "npm run test --workspaces",
+        "api:test": "npm run test --workspace api"
+      }
+}

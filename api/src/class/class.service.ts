@@ -5,8 +5,8 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MongoRepository } from 'typeorm';
-import { CreateClassDto } from 'classity-dto';
-import { User } from 'src/auth/user.entity';
+import { CreateClassDto } from '@classity/dto';
+import { User } from '../auth/user.entity';
 import { Class } from './class.document';
 import { ObjectId } from 'mongodb';
 

@@ -15,7 +15,6 @@
     "@reduxjs/toolkit": "^1.6.0",
     "axios": "^0.21.1",
     "chart.js": "^3.4.1",
-    "classity-dto": "file:../dto",
     "firebase": "^8.6.8",
     "firebase-admin": "^9.10.0",
     "next": "11.0.1",

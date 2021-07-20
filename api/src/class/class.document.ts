@@ -1,5 +1,5 @@
 import { Column } from 'typeorm';
-import { assignmentType } from 'classity-dto';
+import { assignmentType } from '@classity/dto';
 import { v4 as uuid } from 'uuid';
 
 export class Class {

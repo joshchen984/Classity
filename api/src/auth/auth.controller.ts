@@ -1,6 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { CreateUserDto } from 'classity-dto';
+import { CreateUserDto } from '@classity/dto';
 import { Roles } from './roles.decorator';
 import { UserId } from './userid.decorator';
 

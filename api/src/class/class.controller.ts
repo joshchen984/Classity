@@ -1,8 +1,8 @@
 import { Body, Controller, Post, Get, Param, Delete } from '@nestjs/common';
-import { Roles } from 'src/auth/roles.decorator';
-import { UserId } from 'src/auth/userid.decorator';
+import { Roles } from '../auth/roles.decorator';
+import { UserId } from '../auth/userid.decorator';
 import { ClassService } from './class.service';
-import { CreateClassDto } from 'classity-dto';
+import { CreateClassDto } from '@classity/dto';
 
 @Controller('class')
 export class ClassController {
