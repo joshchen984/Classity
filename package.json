@@ -10,6 +10,7 @@
     },
     "scripts": {
         "test": "npm run test --workspaces",
-        "api:test": "npm run test --workspace api"
+        "api:test": "npm run test --workspace api",
+        "dto:build": "npm run build --workspace dto"
       }
 }
