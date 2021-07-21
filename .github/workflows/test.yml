@@ -17,6 +17,7 @@ jobs:
         with:
           node-version: "16"
           cache: "npm"
+      - run: npm install
       - run: npm run dto:build
       - run: npm install
       - run: npm test
