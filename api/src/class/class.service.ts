@@ -8,7 +8,6 @@ import { MongoRepository } from 'typeorm';
 import { CreateClassDto } from '@classity/dto';
 import { User } from '../auth/user.entity';
 import { Class } from './class.document';
-import { ObjectId } from 'mongodb';
 
 @Injectable()
 export class ClassService {
