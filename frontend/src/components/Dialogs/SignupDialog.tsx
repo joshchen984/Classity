@@ -3,9 +3,9 @@ import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import firebase from 'firebase/app';
 import 'firebase/auth';
-import firebaseClient from '../auth/firebaseClient';
+import firebaseClient from '../../auth/firebaseClient';
 import AuthDialog from './AuthDialog';
-import { postApi } from '../app/requestApi';
+import { postApi } from '../../app/requestApi';
 
 type SignupDialogProps = {
   open: boolean;

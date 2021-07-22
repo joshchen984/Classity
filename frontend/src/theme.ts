@@ -60,6 +60,11 @@ const theme = createTheme({
       fontSize: '3rem',
       color: darkBlue,
     },
+    // h3: {
+    //   fontSize: '1.25rem',
+    //   fontWeight: 'bold',
+    //   color: darkBlue,
+    // },
     subtitle1: {
       fontFamily: 'Montserrat',
       fontWeight: 300,

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import AppBar from '@material-ui/core/AppBar';
@@ -28,7 +29,10 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: '4.6em',
   },
 }));
-const LoggedInNav = () => {
+type LoggedInNavProps = {
+  setCreateAssignmentDialogOpen?: (open: boolean) => void;
+};
+const LoggedInNav = ({ setCreateAssignmentDialogOpen }: LoggedInNavProps) => {
   const classes = useStyles();
   const router = useRouter();
   const [profileAnchorEl, setProfileAnchorEl] = useState<null | HTMLElement>(
@@ -40,7 +44,7 @@ const LoggedInNav = () => {
   };
   const addIconClickHandler = () => {
     if (/classes\/.+/.test(router.pathname)) {
-      router.push('/create/assignment');
+      (setCreateAssignmentDialogOpen as (open: boolean) => void)(true);
     } else {
       router.push('/create/class');
     }
@@ -74,5 +78,7 @@ const LoggedInNav = () => {
     </>
   );
 };
-
+LoggedInNav.defaultProps = {
+  setCreateAssignmentDialogOpen: () => null,
+};
 export default LoggedInNav;

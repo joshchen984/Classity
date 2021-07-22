@@ -7,8 +7,8 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Pillar from '../components/Pillar';
 import HomePageNav from '../components/HomePageNav';
-import LoginDialog from '../components/LoginDialog';
-import SignupDialog from '../components/SignupDialog';
+import LoginDialog from '../components/Dialogs/LoginDialog';
+import SignupDialog from '../components/Dialogs/SignupDialog';
 
 const useStyles = makeStyles((theme) => ({
   title: {

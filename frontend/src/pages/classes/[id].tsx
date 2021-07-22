@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
@@ -9,6 +9,7 @@ import Layout from '../../components/Layout';
 import Circle from '../../components/Circle';
 import ClassChart from '../../components/ClassChart';
 import Assignment from '../../components/Assignment';
+import CreateAssignmentDialog from '../../components/Dialogs/CreateAssignmentDialog';
 
 const useStyles = makeStyles((theme) => ({
   header: {
@@ -20,12 +21,20 @@ type AssignmentsProps = {
 };
 
 const Assignments = ({ token }: AssignmentsProps) => {
+  const [createAssignmentDialogOpen, setCreateAssignmentDialogOpen] =
+    useState<boolean>(false);
   const classes = useStyles();
   const router = useRouter();
   const { id } = router.query;
   return (
     <>
-      <LoggedInNav />
+      <LoggedInNav
+        setCreateAssignmentDialogOpen={setCreateAssignmentDialogOpen}
+      />
+      <CreateAssignmentDialog
+        open={createAssignmentDialogOpen}
+        onClose={() => setCreateAssignmentDialogOpen(false)}
+      />
       <Layout>
         <Grid container direction="column">
           <Grid item>
