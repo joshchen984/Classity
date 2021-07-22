@@ -8,6 +8,7 @@ import withUserAuth from '../../hoc/withUserAuth';
 import Layout from '../../components/Layout';
 import Circle from '../../components/Circle';
 import ClassChart from '../../components/ClassChart';
+import Assignment from '../../components/Assignment';
 
 const useStyles = makeStyles((theme) => ({
   header: {
@@ -47,6 +48,24 @@ const Assignments = ({ token }: AssignmentsProps) => {
           </Grid>
           <Grid item>
             <hr />
+          </Grid>
+          <Grid container item direction="column">
+            <Assignment
+              title="Redux Project"
+              description="This is a big science project"
+              gradeWorth={100}
+              gradeRecieved={95}
+              assignmentType="Project"
+              deleteHandler={() => null}
+            />
+            <Assignment
+              title="Redux Project"
+              description="This is a big science project"
+              gradeWorth={100}
+              gradeRecieved={95}
+              assignmentType="Project"
+              deleteHandler={() => null}
+            />
           </Grid>
         </Grid>
       </Layout>

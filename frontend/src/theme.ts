@@ -1,4 +1,4 @@
-import { createMuiTheme } from '@material-ui/core/styles';
+import { createTheme } from '@material-ui/core/styles';
 // import type { PaletteColor } from '@material-ui/core/styles';
 
 const blue = '#55A6D8';
@@ -21,7 +21,7 @@ declare module '@material-ui/core/styles/createPalette' {
   }
 }
 
-const theme = createMuiTheme({
+const theme = createTheme({
   palette: {
     primary: {
       main: blue,
