@@ -40,7 +40,7 @@ const Assignment = ({
   const classes = useStyles();
   return (
     <Grid container className={classes.assignment}>
-      <Grid item container lg={2} justify="center" alignItems="center">
+      <Grid item container lg={2} justifyContent="center" alignItems="center">
         <Grid item>
           <Typography variant="subtitle2">
             {gradeRecieved}/{gradeWorth}
@@ -61,7 +61,7 @@ const Assignment = ({
         direction="column"
         lg={3}
         alignItems="flex-end"
-        justify="space-between"
+        justifyContent="space-between"
       >
         <Grid item style={{ textAlign: 'center', marginBottom: '1rem' }}>
           <Typography variant="subtitle1">Type</Typography>

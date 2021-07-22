@@ -63,7 +63,7 @@ const Class = ({
         direction="column"
         lg={3}
         alignItems="flex-end"
-        justify="space-between"
+        justifyContent="space-between"
       >
         <Grid item style={{ textAlign: 'center' }}>
           <Typography variant="subtitle2">{numGrades}</Typography>

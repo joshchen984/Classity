@@ -42,7 +42,7 @@ const HomePageNav = ({ loginHandler, signupHandler }: HomePageNavProps) => {
       <ElevationScroll>
         <AppBar className={classes.appbar}>
           <Toolbar disableGutters>
-            <Grid container justify="flex-end">
+            <Grid container justifyContent="flex-end">
               <Grid item>
                 <Button
                   variant="contained"

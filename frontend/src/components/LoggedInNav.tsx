@@ -38,9 +38,9 @@ const LoggedInNav = () => {
   const profileIconClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     setProfileAnchorEl(e.currentTarget);
   };
-  const addIconClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-    // TODO: Make create assignment route that gets pushed here
-    if (router.pathname === '/classes/classid' && false) {
+  const addIconClickHandler = () => {
+    if (/classes\/.+/.test(router.pathname)) {
+      router.push('/create/assignment');
     } else {
       router.push('/create/class');
     }

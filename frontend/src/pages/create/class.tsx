@@ -138,7 +138,7 @@ const CreateClass = ({ token }) => {
               />
             </Grid>
           </Grid>
-          <Grid item container justify="center">
+          <Grid item container justifyContent="center">
             <Button
               variant="outlined"
               color="primary"
@@ -151,7 +151,7 @@ const CreateClass = ({ token }) => {
           <Grid item>
             <ClassChart labels={assignmentTypes} grades={grades} />
           </Grid>
-          <Grid item container justify="center" alignItems="center">
+          <Grid item container justifyContent="center" alignItems="center">
             <Button
               variant="contained"
               color="primary"

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import { Class } from '@classity/dto';
-import { makeStyles } from '@material-ui/core/styles';
 import withUserAuth from '../../hoc/withUserAuth';
 import LoggedInNav from '../../components/LoggedInNav';
 import { deleteApi, getApi } from '../../app/requestApi';
@@ -35,7 +34,7 @@ const Classes = ({ token }: ClassesProps) => {
   let userClassesComponents = null;
   if (userClasses) {
     userClassesComponents = userClasses.map((userClass) => (
-      <Grid item>
+      <Grid item key={userClass.id}>
         <ClassComponent
           title={userClass.name}
           teacher={userClass.teacher}
@@ -46,7 +45,6 @@ const Classes = ({ token }: ClassesProps) => {
           }
           numGrades={5}
           unenrollHandler={() => unenrollHandler(userClass.id)}
-          key={userClass.id}
         />
       </Grid>
     ));
