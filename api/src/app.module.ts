@@ -6,6 +6,7 @@ import { ClassModule } from './class/class.module';
 import { AuthModule } from './auth/auth.module';
 import { User } from './auth/user.entity';
 import { ConfigModule } from '@nestjs/config';
+import { AssignmentModule } from './assignment/assignment.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { ConfigModule } from '@nestjs/config';
     }),
     ClassModule,
     AuthModule,
+    AssignmentModule,
   ],
   controllers: [AppController],
   providers: [AppService],

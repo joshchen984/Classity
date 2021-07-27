@@ -1,6 +1,7 @@
 import { Column } from 'typeorm';
 import { assignmentType } from '@classity/dto';
 import { v4 as uuid } from 'uuid';
+import { Assignment } from '../assignment/assignment.document';
 
 export class Class {
   @Column()
@@ -14,6 +15,9 @@ export class Class {
 
   @Column()
   assignmentTypes: assignmentType[];
+
+  @Column((type) => Assignment)
+  assignments: Assignment[];
 
   constructor(
     name: string,
