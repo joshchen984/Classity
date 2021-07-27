@@ -32,6 +32,16 @@ export class ClassService {
     const user = await this.userRepository.findOne({ id: userId });
     return user.classes;
   }
+  async getUserClass(userId: string, classId: string) {
+    const user = await this.userRepository.findOne({ id: userId });
+    const selectedClass = user.classes.filter(
+      (curClass) => curClass.id === classId,
+    );
+    if (!selectedClass) {
+      throw new NotFoundException();
+    }
+    return selectedClass[0];
+  }
 
   async deleteClassById(id: string, userId: string) {
     const { result } = await this.userRepository.updateOne(

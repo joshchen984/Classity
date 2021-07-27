@@ -22,6 +22,11 @@ export class ClassController {
   getUserClasses(@UserId() userId: string) {
     return this.classService.getUserClasses(userId);
   }
+  @Roles('User')
+  @Get('/:id')
+  getUserClass(@UserId() userId: string, @Param('id') classId: string) {
+    return this.classService.getUserClass(userId, classId);
+  }
 
   @Roles('User')
   @Delete('/:id')

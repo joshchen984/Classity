@@ -7,6 +7,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { assignmentType } from '@classity/dto';
 import RoundButton from '../RoundButton';
 
 const useStyles = makeStyles((theme) => ({
@@ -17,20 +18,30 @@ const useStyles = makeStyles((theme) => ({
 type CreateAssignmentDialogProps = {
   onClose: () => void;
   open: boolean;
+  assignmentTypes: assignmentType[] | undefined;
 };
 const CreateAssignmentDialog = ({
   onClose,
   open,
+  assignmentTypes,
 }: CreateAssignmentDialogProps) => {
   const classes = useStyles();
   const theme = useTheme();
   const [name, setName] = useState<string>('');
   const [description, setDescription] = useState<string>('');
-  const [assignmentType, setAssignmentType] = useState<string>('');
+  const [curAssignmentType, setCurAssignmentType] = useState<string>('');
   const [pointsReceived, setPointsReceived] = useState<string>('');
   const [pointsPossible, setPointsPossible] = useState<string>('');
 
   const addAssignmentHandler = () => {};
+  let selectOptions = <MenuItem>Loading</MenuItem>;
+  if (assignmentTypes !== undefined) {
+    selectOptions = assignmentTypes?.map((value) => (
+      <MenuItem key={value.name} value={value.name}>
+        {value.name}
+      </MenuItem>
+    ));
+  }
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
       <DialogTitle className={classes.title}>Add Assignment</DialogTitle>
@@ -69,13 +80,12 @@ const CreateAssignmentDialog = ({
               id="assignment-type"
               select
               label="Assignment Type"
-              value={assignmentType}
-              onChange={(e) => setAssignmentType(e.target.value)}
+              value={curAssignmentType}
+              onChange={(e) => setCurAssignmentType(e.target.value)}
               fullWidth
+              disabled={assignmentTypes === undefined}
             >
-              <MenuItem value={'0'}>One</MenuItem>
-              <MenuItem value={'1'}>Two</MenuItem>
-              <MenuItem value={'2'}>Three</MenuItem>
+              {selectOptions}
             </TextField>
           </Grid>
           <Grid container item justifyContent="space-between">
