@@ -28,7 +28,7 @@ const Assignments = ({ token }: AssignmentsProps) => {
   const [userClass, setUserClass] = useState<classDto.Class>();
   const classes = useStyles();
   const router = useRouter();
-  const classId = router.query.id;
+  const classId = router.query.id as string;
 
   useEffect(() => {
     const getClass = async () => {
@@ -51,6 +51,8 @@ const Assignments = ({ token }: AssignmentsProps) => {
         open={createAssignmentDialogOpen}
         onClose={() => setCreateAssignmentDialogOpen(false)}
         assignmentTypes={userClass?.assignmentTypes}
+        token={token}
+        classId={classId}
       />
       <Layout>
         <Grid container direction="column">

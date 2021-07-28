@@ -7,8 +7,9 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { classDto } from '@classity/dto';
+import { assignmentDto, classDto } from '@classity/dto';
 import RoundButton from '../RoundButton';
+import { postApi } from '../../app/requestApi';
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -19,11 +20,15 @@ type CreateAssignmentDialogProps = {
   onClose: () => void;
   open: boolean;
   assignmentTypes: classDto.assignmentType[] | undefined;
+  token: string;
+  classId: string;
 };
 const CreateAssignmentDialog = ({
   onClose,
   open,
   assignmentTypes,
+  token,
+  classId,
 }: CreateAssignmentDialogProps) => {
   const classes = useStyles();
   const theme = useTheme();
@@ -33,7 +38,18 @@ const CreateAssignmentDialog = ({
   const [pointsReceived, setPointsReceived] = useState<string>('');
   const [pointsPossible, setPointsPossible] = useState<string>('');
 
-  const addAssignmentHandler = () => {};
+  const addAssignmentHandler = async () => {
+    const requestBody: assignmentDto.CreateAssignmentDto = {
+      name,
+      description,
+      assignmentType: curAssignmentType,
+      pointsReceived: parseFloat(pointsReceived),
+      pointsWorth: parseInt(pointsPossible, 10),
+      classId,
+    };
+    await postApi('/api/assignment', requestBody, token);
+    onClose();
+  };
   let selectOptions = <MenuItem>Loading</MenuItem>;
   if (assignmentTypes !== undefined) {
     selectOptions = assignmentTypes?.map((value) => (
