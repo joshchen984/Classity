@@ -7,7 +7,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { assignmentType } from '@classity/dto';
+import { classDto } from '@classity/dto';
 import RoundButton from '../RoundButton';
 
 const useStyles = makeStyles((theme) => ({
@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 type CreateAssignmentDialogProps = {
   onClose: () => void;
   open: boolean;
-  assignmentTypes: assignmentType[] | undefined;
+  assignmentTypes: classDto.assignmentType[] | undefined;
 };
 const CreateAssignmentDialog = ({
   onClose,

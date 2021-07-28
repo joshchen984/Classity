@@ -2,7 +2,7 @@ import { Body, Controller, Post, Get, Param, Delete } from '@nestjs/common';
 import { Roles } from '../auth/roles.decorator';
 import { UserId } from '../auth/userid.decorator';
 import { ClassService } from './class.service';
-import { CreateClassDto } from '@classity/dto';
+import { classDto } from '@classity/dto';
 
 @Controller('class')
 export class ClassController {
@@ -11,7 +11,7 @@ export class ClassController {
   @Roles('User')
   @Post()
   createClass(
-    @Body() createClassDto: CreateClassDto,
+    @Body() createClassDto: classDto.CreateClassDto,
     @UserId() userId: string,
   ) {
     return this.classService.createClass(createClassDto, userId);

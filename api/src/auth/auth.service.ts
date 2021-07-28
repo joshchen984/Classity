@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CreateUserDto } from '@classity/dto';
+import { userDto } from '@classity/dto';
 import { User } from './user.entity';
 import { v4 as uuid } from 'uuid';
 import { ConfigService } from '@nestjs/config';
@@ -34,7 +34,7 @@ export class AuthService implements OnApplicationBootstrap {
     admin.initializeApp(firebaseOptions);
   }
 
-  async signUp(createUserDto: CreateUserDto, userId: string) {
+  async signUp(createUserDto: userDto.CreateUserDto, userId: string) {
     const { email } = createUserDto;
     const user = this.userRepository.create({ email, id: userId });
     let createdUser: User;

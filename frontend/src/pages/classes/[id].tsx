@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
-import { Class } from '@classity/dto';
+import { classDto } from '@classity/dto';
 import LoggedInNav from '../../components/LoggedInNav';
 import withUserAuth from '../../hoc/withUserAuth';
 import Layout from '../../components/Layout';
@@ -25,14 +25,17 @@ type AssignmentsProps = {
 const Assignments = ({ token }: AssignmentsProps) => {
   const [createAssignmentDialogOpen, setCreateAssignmentDialogOpen] =
     useState<boolean>(false);
-  const [userClass, setUserClass] = useState<Class>();
+  const [userClass, setUserClass] = useState<classDto.Class>();
   const classes = useStyles();
   const router = useRouter();
   const classId = router.query.id;
 
   useEffect(() => {
     const getClass = async () => {
-      const foundClass: Class = await getApi(`/api/class/${classId}`, token);
+      const foundClass: classDto.Class = await getApi(
+        `/api/class/${classId}`,
+        token
+      );
       setUserClass(foundClass);
     };
     if (token) {

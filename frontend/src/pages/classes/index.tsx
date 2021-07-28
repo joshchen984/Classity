@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import { Class } from '@classity/dto';
+import { classDto } from '@classity/dto';
 import withUserAuth from '../../hoc/withUserAuth';
 import LoggedInNav from '../../components/LoggedInNav';
 import { deleteApi, getApi } from '../../app/requestApi';
@@ -15,10 +15,10 @@ const Classes = ({ token }: ClassesProps) => {
   const [userClasses, setUserClasses] = useState<Class[]>();
 
   const getClasses = async () => {
-    const response: Class[] = (await getApi(
+    const response: classDto.Class[] = (await getApi(
       '/api/class',
       token
-    )) as unknown as Class[];
+    )) as unknown as classDto.Class[];
     setUserClasses(response);
   };
   useEffect(() => {

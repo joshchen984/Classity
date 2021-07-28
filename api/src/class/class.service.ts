@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MongoRepository } from 'typeorm';
-import { CreateClassDto } from '@classity/dto';
+import { classDto } from '@classity/dto';
 import { User } from '../auth/user.entity';
 import { Class } from './class.document';
 
@@ -15,7 +15,7 @@ export class ClassService {
     @InjectRepository(User) private userRepository: MongoRepository<User>,
   ) {}
 
-  async createClass(createClassDto: CreateClassDto, userId: string) {
+  async createClass(createClassDto: classDto.CreateClassDto, userId: string) {
     const { name, teacher, assignmentTypes } = createClassDto;
     const newClass = new Class(name, teacher, assignmentTypes);
     const { result } = await this.userRepository.updateOne(
