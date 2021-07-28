@@ -1,4 +1,5 @@
 import { Column } from 'typeorm';
+import { v4 as uuid } from 'uuid';
 
 export class Assignment {
   @Column()
@@ -18,4 +19,19 @@ export class Assignment {
 
   @Column()
   pointsWorth: number;
+
+  constructor(
+    name: string,
+    description: string,
+    type: string,
+    pointsReceived: number,
+    pointsWorth: number,
+  ) {
+    this.id = uuid();
+    this.name = name;
+    this.description = description;
+    this.type = type;
+    this.pointsReceived = pointsReceived;
+    this.pointsWorth = pointsWorth;
+  }
 }

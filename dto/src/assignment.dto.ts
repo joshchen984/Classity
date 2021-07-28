@@ -17,4 +17,7 @@ export class CreateAssignmentDto {
   @Min(1)
   @IsInt()
   pointsWorth: number;
+
+  @MinLength(1)
+  classId: string;
 }

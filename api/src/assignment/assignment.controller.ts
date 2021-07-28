@@ -1,4 +1,4 @@
-import { Controller, Post } from '@nestjs/common';
+import { Controller, Post, Body } from '@nestjs/common';
 import { Roles } from 'src/auth/roles.decorator';
 import { UserId } from 'src/auth/userid.decorator';
 import { AssignmentService } from './assignment.service';
@@ -11,7 +11,7 @@ export class AssignmentController {
   @Roles('User')
   @Post()
   createAssignment(
-    createAssignmentDto: assignmentDto.CreateAssignmentDto,
+    @Body() createAssignmentDto: assignmentDto.CreateAssignmentDto,
     @UserId() userId: string,
   ) {
     return this.assignmentService.createAssignment(createAssignmentDto, userId);
