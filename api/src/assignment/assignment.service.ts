@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { assignmentDto } from '@classity/dto';
 import { Assignment } from './assignment.document';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -37,12 +41,22 @@ export class AssignmentService {
     let updated = false;
     for (const userClass of user.classes) {
       if (userClass.id === classId) {
-        if (userClass.assignments === undefined) {
-          userClass.assignments = [assignment];
+        if (
+          userClass.assignmentTypes.some(
+            (assignType) => assignType.name === assignmentType,
+          )
+        ) {
+          if (userClass.assignments === undefined) {
+            userClass.assignments = [assignment];
+          } else {
+            userClass.assignments.push(assignment);
+          }
+          updated = true;
         } else {
-          userClass.assignments.push(assignment);
+          throw new BadRequestException(
+            `No assignment type that matches the name ${assignmentType}`,
+          );
         }
-        updated = true;
         break;
       }
     }

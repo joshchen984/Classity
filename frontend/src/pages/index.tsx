@@ -43,8 +43,14 @@ export default function Home() {
         onClose={() => setSignupDialogOpen(false)}
       />
       <HomePageNav
-        loginHandler={() => setLoginDialogOpen(true)}
-        signupHandler={() => setSignupDialogOpen(true)}
+        loginHandler={() => {
+          setLoginDialogOpen(true);
+          setSignupDialogOpen(false);
+        }}
+        signupHandler={() => {
+          setSignupDialogOpen(true);
+          setLoginDialogOpen(false);
+        }}
       />
       <Grid container direction="column" alignItems="center">
         <Grid item>
