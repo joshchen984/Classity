@@ -7,7 +7,7 @@ import { assignmentDto } from '@classity/dto';
 import { Assignment } from './assignment.document';
 import { Class } from '../class/class.document';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from 'src/auth/user.entity';
+import { User } from '../auth/user.entity';
 import { MongoRepository } from 'typeorm';
 
 @Injectable()

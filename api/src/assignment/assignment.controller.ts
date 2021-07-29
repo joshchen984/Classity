@@ -1,6 +1,6 @@
 import { Controller, Post, Body } from '@nestjs/common';
-import { Roles } from 'src/auth/roles.decorator';
-import { UserId } from 'src/auth/userid.decorator';
+import { Roles } from '../auth/roles.decorator';
+import { UserId } from '../auth/userid.decorator';
 import { AssignmentService } from './assignment.service';
 import { assignmentDto } from '@classity/dto';
 
