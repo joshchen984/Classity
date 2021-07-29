@@ -22,6 +22,7 @@ type CreateAssignmentDialogProps = {
   assignmentTypes: classDto.assignmentType[] | undefined;
   token: string;
   classId: string;
+  getClass: () => Promise<void>;
 };
 const CreateAssignmentDialog = ({
   onClose,
@@ -29,6 +30,7 @@ const CreateAssignmentDialog = ({
   assignmentTypes,
   token,
   classId,
+  getClass,
 }: CreateAssignmentDialogProps) => {
   const classes = useStyles();
   const theme = useTheme();
@@ -48,6 +50,7 @@ const CreateAssignmentDialog = ({
       classId,
     };
     await postApi('/api/assignment', requestBody, token);
+    await getClass();
     onClose();
   };
   let selectOptions: JSX.Element | JSX.Element[] = <MenuItem>Loading</MenuItem>;

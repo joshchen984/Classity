@@ -4,6 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import { classDto } from '@classity/dto';
+import { format } from 'date-fns';
 import LoggedInNav from '../../components/LoggedInNav';
 import withUserAuth from '../../hoc/withUserAuth';
 import Layout from '../../components/Layout';
@@ -42,29 +43,33 @@ const Assignments = ({ token }: AssignmentsProps) => {
   const router = useRouter();
   const classId = router.query.id as string;
 
+  const getClass = async () => {
+    const foundClass: classDto.Class = await getApi(
+      `/api/class/${classId}`,
+      token
+    );
+    setUserClass(foundClass);
+  };
   useEffect(() => {
-    const getClass = async () => {
-      const foundClass: classDto.Class = await getApi(
-        `/api/class/${classId}`,
-        token
-      );
-      setUserClass(foundClass);
-    };
     if (token) {
       getClass();
     }
   }, [token]);
-
-  const assignments = userClass?.assignments.map((assignment) => (
-    <Assignment
-      title={assignment.name}
-      description={assignment.description}
-      gradeWorth={assignment.pointsWorth}
-      gradeReceived={assignment.pointsReceived}
-      assignmentType={assignment.type}
-      deleteHandler={() => true}
-    />
-  ));
+  let assignments = null;
+  if (userClass?.assignments !== undefined) {
+    assignments = userClass.assignments.map((assignment) => (
+      <Assignment
+        title={assignment.name}
+        description={assignment.description}
+        gradeWorth={assignment.pointsWorth}
+        gradeReceived={assignment.pointsReceived}
+        assignmentType={assignment.type}
+        deleteHandler={() => true}
+        createdAt={format(new Date(assignment.createdAt), 'MMMM d, y')}
+        key={assignment.id}
+      />
+    ));
+  }
   return (
     <>
       <LoggedInNav
@@ -73,6 +78,7 @@ const Assignments = ({ token }: AssignmentsProps) => {
       <CreateAssignmentDialog
         open={createAssignmentDialogOpen}
         onClose={() => setCreateAssignmentDialogOpen(false)}
+        getClass={getClass}
         assignmentTypes={userClass?.assignmentTypes}
         token={token}
         classId={classId}

@@ -27,6 +27,7 @@ type AssignmentProps = {
   gradeWorth: number;
   gradeReceived: number;
   assignmentType: string;
+  createdAt: string;
   deleteHandler: () => void;
 };
 const Assignment = ({
@@ -35,6 +36,7 @@ const Assignment = ({
   gradeWorth,
   gradeReceived,
   assignmentType,
+  createdAt,
   deleteHandler,
 }: AssignmentProps) => {
   const classes = useStyles();
@@ -70,7 +72,7 @@ const Assignment = ({
           </Typography>
         </Grid>
         <Grid item>
-          <Typography variant="subtitle1">Created April 13</Typography>
+          <Typography variant="subtitle1">{`Created ${createdAt}`}</Typography>
         </Grid>
       </Grid>
     </Grid>

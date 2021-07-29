@@ -4,7 +4,7 @@ export class CreateAssignmentDto {
   @MinLength(1)
   name: string;
 
-  @MinLength(1)
+  @IsString()
   description: string;
 
   @MinLength(1)
@@ -42,4 +42,7 @@ export class Assignment {
   @IsInt()
   @Min(1)
   pointsWorth: number;
+
+  @IsString()
+  createdAt: string;
 }

@@ -20,6 +20,9 @@ export class Assignment {
   @Column()
   pointsWorth: number;
 
+  @Column()
+  createdAt: Date;
+
   constructor(
     name: string,
     description: string,
@@ -33,5 +36,6 @@ export class Assignment {
     this.type = type;
     this.pointsReceived = pointsReceived;
     this.pointsWorth = pointsWorth;
+    this.createdAt = new Date();
   }
 }
