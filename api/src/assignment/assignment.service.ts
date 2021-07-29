@@ -5,6 +5,7 @@ import {
 } from '@nestjs/common';
 import { assignmentDto } from '@classity/dto';
 import { Assignment } from './assignment.document';
+import { Class } from '../class/class.document';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/auth/user.entity';
 import { MongoRepository } from 'typeorm';
@@ -14,6 +15,29 @@ export class AssignmentService {
   constructor(
     @InjectRepository(User) private userRepository: MongoRepository<User>,
   ) {}
+
+  private updateGrade(
+    userClass: Class,
+    assignmentTypeName: string,
+    pointsReceived: number,
+    pointsWorth: number,
+    isAddingAssignment: boolean = true,
+  ) {
+    const assignmentType = userClass.assignmentTypes.find(
+      (element) => element.name === assignmentTypeName,
+    );
+    const prevGrade = assignmentType.currentGrade;
+    if (isAddingAssignment) {
+      assignmentType.pointsReceived += pointsReceived;
+      assignmentType.pointsWorth += pointsWorth;
+    } else {
+      assignmentType.pointsReceived -= pointsReceived;
+      assignmentType.pointsWorth -= pointsWorth;
+    }
+    assignmentType.currentGrade =
+      (pointsReceived / pointsWorth) * assignmentType.percentOfGrade;
+    userClass.grade += assignmentType.currentGrade - prevGrade;
+  }
 
   async createAssignment(
     createAssignmentDto: assignmentDto.CreateAssignmentDto,
@@ -41,16 +65,21 @@ export class AssignmentService {
     let updated = false;
     for (const userClass of user.classes) {
       if (userClass.id === classId) {
-        if (
-          userClass.assignmentTypes.some(
-            (assignType) => assignType.name === assignmentType,
-          )
-        ) {
+        let assignmentTypeIndex = userClass.assignmentTypes.findIndex(
+          (assignType) => assignType.name === assignmentType,
+        );
+        if (assignmentTypeIndex !== -1) {
           if (userClass.assignments === undefined) {
             userClass.assignments = [assignment];
           } else {
             userClass.assignments.push(assignment);
           }
+          this.updateGrade(
+            userClass,
+            assignmentType,
+            pointsReceived,
+            pointsWorth,
+          );
           updated = true;
         } else {
           throw new BadRequestException(

@@ -17,6 +17,12 @@ export class assignmentType {
 
   @IsNumber()
   currentGrade: number;
+
+  @IsNumber()
+  pointsReceived: number;
+
+  @IsNumber()
+  pointsWorth: number;
 }
 
 export class CreateClassDto {

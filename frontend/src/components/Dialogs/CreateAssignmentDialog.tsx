@@ -50,7 +50,7 @@ const CreateAssignmentDialog = ({
     await postApi('/api/assignment', requestBody, token);
     onClose();
   };
-  let selectOptions = <MenuItem>Loading</MenuItem>;
+  let selectOptions: JSX.Element | JSX.Element[] = <MenuItem>Loading</MenuItem>;
   if (assignmentTypes !== undefined) {
     selectOptions = assignmentTypes?.map((value) => (
       <MenuItem key={value.name} value={value.name}>

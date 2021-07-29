@@ -16,6 +16,9 @@ export class Class {
   @Column()
   assignmentTypes: classDto.assignmentType[];
 
+  @Column()
+  grade: number;
+
   @Column((type) => Assignment)
   assignments: Assignment[];
 
@@ -28,5 +31,6 @@ export class Class {
     this.teacher = teacher;
     this.assignmentTypes = assignmentTypes;
     this.id = uuid();
+    this.grade = 100;
   }
 }

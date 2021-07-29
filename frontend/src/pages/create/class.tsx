@@ -5,6 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import { useRouter } from 'next/router';
+import { classDto } from '@classity/dto';
 import LoggedInNav from '../../components/LoggedInNav';
 import ClassChart from '../../components/ClassChart';
 import { postApi } from '../../app/requestApi';
@@ -21,7 +22,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CreateClass = ({ token }) => {
+type CreateClassProps = {
+  token: string;
+};
+const CreateClass = ({ token }: CreateClassProps) => {
   const router = useRouter();
   const classes = useStyles();
   const [assignmentTypes, setAssignmentTypes] = useState<string[]>(['Total']);
@@ -64,19 +68,21 @@ const CreateClass = ({ token }) => {
   };
   const createClassHandler = async () => {
     try {
-      await postApi(
-        '/api/class',
-        {
-          name: classTitle,
-          teacher,
-          assignmentTypes: assignmentTypes.map((assignmentType, i) => ({
-            name: assignmentType,
-            percentOfGrade: grades[i],
-            currentGrade: grades[i],
-          })),
-        },
-        token
+      const requestBody: classDto.CreateClassDto = {
+        name: classTitle,
+        teacher,
+        assignmentTypes: assignmentTypes.map((assignmentType, i) => ({
+          name: assignmentType,
+          percentOfGrade: grades[i],
+          currentGrade: grades[i],
+          pointsReceived: 0,
+          pointsWorth: 0,
+        })),
+      };
+      requestBody.assignmentTypes = requestBody.assignmentTypes.filter(
+        (assignType) => assignType.name !== 'Total'
       );
+      await postApi('/api/class', requestBody, token);
       router.push('/classes');
     } catch (e) {
       console.log(e);

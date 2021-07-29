@@ -22,7 +22,8 @@
       "files": ["*.tsx"],
       "rules": {
         "react/jsx-filename-extension": "off",
-        "prettier/prettier": "error"
+        "prettier/prettier": "error",
+        "no-undef": "off"
       }
     }
   ],
