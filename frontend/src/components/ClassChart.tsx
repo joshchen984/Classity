@@ -3,8 +3,8 @@ import { Bar } from 'react-chartjs-2';
 import { useTheme } from '@material-ui/core/styles';
 
 type ClassChartProps = {
-  labels: string[];
-  grades: number[];
+  labels: string[] | undefined;
+  grades: number[] | undefined;
   currentGrades?: number[];
 };
 const ClassChart = ({ labels, grades, currentGrades }: ClassChartProps) => {

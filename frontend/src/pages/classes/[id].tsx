@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/router';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
@@ -26,6 +26,18 @@ const Assignments = ({ token }: AssignmentsProps) => {
   const [createAssignmentDialogOpen, setCreateAssignmentDialogOpen] =
     useState<boolean>(false);
   const [userClass, setUserClass] = useState<classDto.Class>();
+  const assignmentTypeLabels: string[] | undefined = useMemo(
+    () => userClass?.assignmentTypes.map((element) => element.name),
+    [userClass?.assignmentTypes]
+  );
+  const assignmentTypeGrades: number[] | undefined = useMemo(
+    () => userClass?.assignmentTypes.map((element) => element.percentOfGrade),
+    [userClass?.assignmentTypes]
+  );
+  const assignmentTypeCurrentGrades: number[] | undefined = useMemo(
+    () => userClass?.assignmentTypes.map((element) => element.currentGrade),
+    [userClass?.assignmentTypes]
+  );
   const classes = useStyles();
   const router = useRouter();
   const classId = router.query.id as string;
@@ -42,6 +54,17 @@ const Assignments = ({ token }: AssignmentsProps) => {
       getClass();
     }
   }, [token]);
+
+  const assignments = userClass?.assignments.map((assignment) => (
+    <Assignment
+      title={assignment.name}
+      description={assignment.description}
+      gradeWorth={assignment.pointsWorth}
+      gradeReceived={assignment.pointsReceived}
+      assignmentType={assignment.type}
+      deleteHandler={() => true}
+    />
+  ));
   return (
     <>
       <LoggedInNav
@@ -57,17 +80,19 @@ const Assignments = ({ token }: AssignmentsProps) => {
       <Layout>
         <Grid container direction="column">
           <Grid item>
-            <Typography variant="h1">Title</Typography>
+            <Typography variant="h1">{userClass?.name}</Typography>
           </Grid>
           <Grid container item alignItems="center" className={classes.header}>
             <Grid item md={3}>
-              <Circle size="large">60%</Circle>
+              <Circle size="large">
+                {userClass ? `${userClass.grade.toFixed(2)}%` : 'N/A'}
+              </Circle>
             </Grid>
             <Grid item md={9}>
               <ClassChart
-                labels={['Homework', 'Tests', 'Total']}
-                grades={[40, 60, 100]}
-                currentGrades={[35, 50, 50]}
+                labels={assignmentTypeLabels}
+                grades={assignmentTypeGrades}
+                currentGrades={assignmentTypeCurrentGrades}
               />
             </Grid>
           </Grid>
@@ -78,22 +103,7 @@ const Assignments = ({ token }: AssignmentsProps) => {
             <hr />
           </Grid>
           <Grid container item direction="column">
-            <Assignment
-              title="Redux Project"
-              description="This is a big science project"
-              gradeWorth={100}
-              gradeRecieved={95}
-              assignmentType="Project"
-              deleteHandler={() => null}
-            />
-            <Assignment
-              title="Redux Project"
-              description="This is a big science project"
-              gradeWorth={100}
-              gradeRecieved={95}
-              assignmentType="Project"
-              deleteHandler={() => null}
-            />
+            {assignments}
           </Grid>
         </Grid>
       </Layout>

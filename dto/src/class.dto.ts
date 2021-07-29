@@ -6,7 +6,7 @@ import {
   IsNumber,
 } from "class-validator";
 import { Type } from "class-transformer";
-
+import { Assignment } from "./assignment.dto";
 export class assignmentType {
   @IsString()
   @MinLength(1)
@@ -48,8 +48,16 @@ export class Class {
   @MinLength(1)
   teacher: string;
 
+  @IsNumber()
+  grade: number;
+
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => assignmentType)
   assignmentTypes: assignmentType[];
+
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => Assignment)
+  assignments: Assignment[];
 }

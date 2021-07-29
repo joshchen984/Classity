@@ -25,7 +25,7 @@ type AssignmentProps = {
   title: string;
   description: string;
   gradeWorth: number;
-  gradeRecieved: number;
+  gradeReceived: number;
   assignmentType: string;
   deleteHandler: () => void;
 };
@@ -33,7 +33,7 @@ const Assignment = ({
   title,
   description,
   gradeWorth,
-  gradeRecieved,
+  gradeReceived,
   assignmentType,
   deleteHandler,
 }: AssignmentProps) => {
@@ -43,7 +43,7 @@ const Assignment = ({
       <Grid item container lg={2} justifyContent="center" alignItems="center">
         <Grid item>
           <Typography variant="subtitle2">
-            {gradeRecieved}/{gradeWorth}
+            {gradeReceived}/{gradeWorth}
           </Typography>
         </Grid>
       </Grid>
