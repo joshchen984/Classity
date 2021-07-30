@@ -22,6 +22,9 @@ export class Class {
   @Column((type) => Assignment)
   assignments: Assignment[];
 
+  @Column()
+  createdAt: Date;
+
   constructor(
     name: string,
     teacher: string,
@@ -32,5 +35,6 @@ export class Class {
     this.assignmentTypes = assignmentTypes;
     this.id = uuid();
     this.grade = 100;
+    this.createdAt = new Date();
   }
 }

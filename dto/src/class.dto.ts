@@ -60,4 +60,7 @@ export class Class {
   @ValidateNested({ each: true })
   @Type(() => Assignment)
   assignments: Assignment[];
+
+  @IsString()
+  createdAt: string;
 }
