@@ -1,9 +1,9 @@
-/* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react';
+import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import AssignmentDialog from './Dialogs/AssignmentDialog';
 
 const useStyles = makeStyles((theme) => ({
   assignment: {
@@ -16,6 +16,10 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: 'none',
     fontWeight: 'bold',
     color: theme.palette.darkBlue.main,
+    '&:hover': {
+      textDecoration: 'underline',
+      cursor: 'pointer',
+    },
   },
   assignmentType: {
     fontSize: '1.2rem',
@@ -40,8 +44,25 @@ const Assignment = ({
   deleteHandler,
 }: AssignmentProps) => {
   const classes = useStyles();
+  const [dialogOpen, setDialogOpen] = useState<boolean>(false);
+  let trimmedDesc = description;
+  if (description.length > 70) {
+    // eslint-disable-next-line no-param-reassign
+    trimmedDesc = `${description.substring(0, 70)}...`;
+  }
   return (
     <Grid container className={classes.assignment}>
+      <AssignmentDialog
+        open={dialogOpen}
+        onClose={() => setDialogOpen(false)}
+        title={title}
+        description={description}
+        assignmentType={assignmentType}
+        createdAt={createdAt}
+        gradeReceived={gradeReceived}
+        gradeWorth={gradeWorth}
+        deleteHandler={deleteHandler}
+      />
       <Grid item container lg={2} justifyContent="center" alignItems="center">
         <Grid item>
           <Typography variant="subtitle2">
@@ -51,10 +72,15 @@ const Assignment = ({
       </Grid>
       <Grid container item lg={7} direction="column">
         <Grid item>
-          <span className={classes.title}>{title}</span>
+          <Typography
+            onClick={() => setDialogOpen(true)}
+            className={classes.title}
+          >
+            {title}
+          </Typography>
         </Grid>
         <Grid item>
-          <Typography variant="subtitle1">{description}</Typography>
+          <Typography variant="subtitle1">{trimmedDesc}</Typography>
         </Grid>
       </Grid>
       <Grid
