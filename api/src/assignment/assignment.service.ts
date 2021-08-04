@@ -34,8 +34,13 @@ export class AssignmentService {
       assignmentType.pointsReceived -= pointsReceived;
       assignmentType.pointsWorth -= pointsWorth;
     }
-    assignmentType.currentGrade =
-      (pointsReceived / pointsWorth) * assignmentType.percentOfGrade;
+    if (assignmentType.pointsWorth !== 0) {
+      assignmentType.currentGrade =
+        (assignmentType.pointsReceived / assignmentType.pointsWorth) *
+        assignmentType.percentOfGrade;
+    } else {
+      assignmentType.currentGrade = assignmentType.percentOfGrade;
+    }
     userClass.grade += assignmentType.currentGrade - prevGrade;
   }
 
@@ -86,6 +91,45 @@ export class AssignmentService {
             `No assignment type that matches the name ${assignmentType}`,
           );
         }
+        break;
+      }
+    }
+    if (!updated) {
+      throw new NotFoundException();
+    }
+    await this.userRepository.save(user);
+    return assignment;
+  }
+
+  async deleteAssignmentById(
+    classId: string,
+    assignmentId: string,
+    userId: string,
+  ) {
+    //TODO: Fix grade not updating properly
+    const user: User = await this.userRepository.findOne({ id: userId });
+    if (!user) {
+      throw new NotFoundException();
+    }
+    let updated = false;
+    let assignment: Assignment;
+    for (const userClass of user.classes) {
+      if (userClass.id === classId) {
+        const assignmentIndex = userClass.assignments.findIndex(
+          (assignment) => assignment.id === assignmentId,
+        );
+        if (assignmentIndex === -1) {
+          throw new NotFoundException();
+        }
+        assignment = userClass.assignments.splice(assignmentIndex, 1)[0];
+        this.updateGrade(
+          userClass,
+          assignment.type,
+          assignment.pointsReceived,
+          assignment.pointsWorth,
+          false,
+        );
+        updated = true;
         break;
       }
     }

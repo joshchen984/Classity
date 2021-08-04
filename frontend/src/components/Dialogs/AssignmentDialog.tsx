@@ -35,7 +35,7 @@ type AssignmentDialogProps = {
   gradeReceived: number;
   assignmentType: string;
   createdAt: string;
-  deleteHandler: () => void;
+  deleteHandler: () => Promise<void>;
 };
 const AssignmentDialog = ({
   open,

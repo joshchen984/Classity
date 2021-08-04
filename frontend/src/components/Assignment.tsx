@@ -32,7 +32,7 @@ type AssignmentProps = {
   gradeReceived: number;
   assignmentType: string;
   createdAt: string;
-  deleteHandler: () => void;
+  deleteHandler: () => Promise<void>;
 };
 const Assignment = ({
   title,
@@ -61,7 +61,10 @@ const Assignment = ({
         createdAt={createdAt}
         gradeReceived={gradeReceived}
         gradeWorth={gradeWorth}
-        deleteHandler={deleteHandler}
+        deleteHandler={async () => {
+          await deleteHandler();
+          setDialogOpen(false);
+        }}
       />
       <Grid item container lg={2} justifyContent="center" alignItems="center">
         <Grid item>

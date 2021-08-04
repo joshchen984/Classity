@@ -12,7 +12,7 @@ import Circle from '../../components/Circle';
 import ClassChart from '../../components/ClassChart';
 import Assignment from '../../components/Assignment';
 import CreateAssignmentDialog from '../../components/Dialogs/CreateAssignmentDialog';
-import { getApi } from '../../app/requestApi';
+import { deleteApi, getApi } from '../../app/requestApi';
 
 const useStyles = makeStyles((theme) => ({
   header: {
@@ -28,15 +28,22 @@ const Assignments = ({ token }: AssignmentsProps) => {
     useState<boolean>(false);
   const [userClass, setUserClass] = useState<classDto.Class>();
   const assignmentTypeLabels: string[] | undefined = useMemo(
-    () => userClass?.assignmentTypes.map((element) => element.name),
+    () =>
+      userClass?.assignmentTypes.map((element) => element.name).concat('Total'),
     [userClass?.assignmentTypes]
   );
   const assignmentTypeGrades: number[] | undefined = useMemo(
-    () => userClass?.assignmentTypes.map((element) => element.percentOfGrade),
+    () =>
+      userClass?.assignmentTypes
+        .map((element) => element.percentOfGrade)
+        .concat(100),
     [userClass?.assignmentTypes]
   );
   const assignmentTypeCurrentGrades: number[] | undefined = useMemo(
-    () => userClass?.assignmentTypes.map((element) => element.currentGrade),
+    () =>
+      userClass?.assignmentTypes
+        .map((element) => element.currentGrade)
+        .concat(userClass.grade),
     [userClass?.assignmentTypes]
   );
   const classes = useStyles();
@@ -50,11 +57,17 @@ const Assignments = ({ token }: AssignmentsProps) => {
     );
     setUserClass(foundClass);
   };
+  const deleteAssignmentHandler = async (assignmentId: string) => {
+    await deleteApi(`/api/assignment/${classId}/${assignmentId}`, token);
+    await getClass();
+  };
+
   useEffect(() => {
     if (token) {
       getClass();
     }
   }, [token]);
+
   let assignments = null;
   if (userClass?.assignments !== undefined) {
     assignments = userClass.assignments.map((assignment) => (
@@ -64,7 +77,7 @@ const Assignments = ({ token }: AssignmentsProps) => {
         gradeWorth={assignment.pointsWorth}
         gradeReceived={assignment.pointsReceived}
         assignmentType={assignment.type}
-        deleteHandler={() => true}
+        deleteHandler={async () => deleteAssignmentHandler(assignment.id)}
         createdAt={format(new Date(assignment.createdAt), 'MMMM d, y')}
         key={assignment.id}
       />

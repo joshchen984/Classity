@@ -45,7 +45,7 @@ const Class = ({
   return (
     <Grid container className={classes.class}>
       <Grid item lg={4}>
-        <Circle size="medium">{grade.toString()}%</Circle>
+        <Circle size="medium">{grade.toFixed()}%</Circle>
       </Grid>
       <Grid container item lg={5} direction="column">
         <Grid item>

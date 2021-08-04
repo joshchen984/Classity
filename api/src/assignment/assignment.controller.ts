@@ -1,4 +1,4 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, Delete, Param } from '@nestjs/common';
 import { Roles } from '../auth/roles.decorator';
 import { UserId } from '../auth/userid.decorator';
 import { AssignmentService } from './assignment.service';
@@ -15,5 +15,19 @@ export class AssignmentController {
     @UserId() userId: string,
   ) {
     return this.assignmentService.createAssignment(createAssignmentDto, userId);
+  }
+
+  @Roles('User')
+  @Delete('/:classId/:assignmentId')
+  deleteAssignmentById(
+    @Param('classId') classId: string,
+    @Param('assignmentId') assignmentId: string,
+    @UserId() userId: string,
+  ) {
+    return this.assignmentService.deleteAssignmentById(
+      classId,
+      assignmentId,
+      userId,
+    );
   }
 }
