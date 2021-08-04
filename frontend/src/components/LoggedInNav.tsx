@@ -55,7 +55,7 @@ const LoggedInNav = ({ setCreateAssignmentDialogOpen }: LoggedInNavProps) => {
         <AppBar className={classes.appbar}>
           <Toolbar>
             <Grid container justifyContent="space-between" alignItems="center">
-              <Logo />
+              <Logo onClickRoute="/classes" />
               <Grid
                 container
                 item

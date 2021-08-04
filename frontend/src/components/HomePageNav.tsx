@@ -44,7 +44,7 @@ const HomePageNav = ({ loginHandler, signupHandler }: HomePageNavProps) => {
         <AppBar className={classes.appbar}>
           <Toolbar>
             <Grid container justifyContent="space-between" alignItems="center">
-              <Logo />
+              <Logo onClickRoute="/" />
               <Grid
                 container
                 item
