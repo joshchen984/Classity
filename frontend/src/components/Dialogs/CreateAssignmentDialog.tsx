@@ -86,7 +86,6 @@ const CreateAssignmentDialog = ({
               id="assignment-description"
               type="text"
               label="Description"
-              required
               fullWidth
               value={description}
               onChange={(e) => setDescription(e.target.value)}

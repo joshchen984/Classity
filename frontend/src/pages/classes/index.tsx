@@ -12,7 +12,7 @@ type ClassesProps = {
   token: string;
 };
 const Classes = ({ token }: ClassesProps) => {
-  const [userClasses, setUserClasses] = useState<Class[]>();
+  const [userClasses, setUserClasses] = useState<classDto.Class[]>();
 
   const getClasses = async () => {
     const response: classDto.Class[] = (await getApi(
@@ -43,7 +43,7 @@ const Classes = ({ token }: ClassesProps) => {
             userClass.assignmentTypes[userClass.assignmentTypes.length - 1]
               .currentGrade
           }
-          numGrades={5}
+          numGrades={userClass.assignments.length}
           unenrollHandler={() => unenrollHandler(userClass.id)}
         />
       </Grid>

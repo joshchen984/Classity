@@ -67,7 +67,9 @@ const Class = ({
       >
         <Grid item style={{ textAlign: 'center' }}>
           <Typography variant="subtitle2">{numGrades}</Typography>
-          <Typography variant="subtitle1">grades</Typography>
+          <Typography variant="subtitle1">
+            {numGrades === 1 ? 'grade' : 'grades'}
+          </Typography>
         </Grid>
         <Grid item>
           <RoundButton color={theme.palette.brown} onClick={unenrollHandler}>
