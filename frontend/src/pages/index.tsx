@@ -82,6 +82,11 @@ export default function Home() {
   const [loginDialogOpen, setLoginDialogOpen] = useState<boolean>(false);
   const [signupDialogOpen, setSignupDialogOpen] = useState<boolean>(false);
 
+  const signupHandler = () => {
+    setSignupDialogOpen(true);
+    setLoginDialogOpen(false);
+  };
+
   let output = (
     <Grid
       container
@@ -100,7 +105,11 @@ export default function Home() {
         </Typography>
       </Grid>
       <Grid item>
-        <Button variant="contained" className={classes.getStarted}>
+        <Button
+          variant="contained"
+          className={classes.getStarted}
+          onClick={signupHandler}
+        >
           Get Started
         </Button>
       </Grid>
@@ -142,10 +151,7 @@ export default function Home() {
           setLoginDialogOpen(true);
           setSignupDialogOpen(false);
         }}
-        signupHandler={() => {
-          setSignupDialogOpen(true);
-          setLoginDialogOpen(false);
-        }}
+        signupHandler={signupHandler}
       />
       {output}
     </>
