@@ -12,6 +12,18 @@ import { postApi } from '../../app/requestApi';
 import withUserAuth from '../../hoc/withUserAuth';
 import Layout from '../../components/Layout';
 
+type ErrorMessages = {
+  classTitle: string;
+  teacher: string;
+  grade: string;
+  assignmentType: string;
+};
+type ErrorMessageChanges = {
+  classTitle?: string;
+  teacher?: string;
+  grade?: string;
+  assignmentType?: string;
+};
 const useStyles = makeStyles((theme) => ({
   assignmentTypeButton: {
     borderRadius: '50em',
@@ -34,56 +46,71 @@ const CreateClass = ({ token }: CreateClassProps) => {
   const [grade, setGrade] = useState<number>(100);
   const [classTitle, setClassTitle] = useState<string>('');
   const [teacher, setTeacher] = useState<string>('');
-  const [error, setError] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<{ [key: string]: string }>(
-    {}
-  );
+  const [errorMessages, setErrorMessages] = useState<ErrorMessages>({});
+  const setError = (errors: ErrorMessageChanges) => {
+    setErrorMessages((prevState) => ({
+      ...prevState,
+      ...errors,
+    }));
+  };
   const createAssignmentHandler = () => {
+    setError({ grade: '', assignmentType: '' });
     let isError = false;
-    if (assignmentType === '') {
-      isError = true;
-      setError(true);
-      setErrorMessage((prevState) => ({
-        ...prevState,
-        assignmentType: "Assignment Type can't be empty",
-      }));
-    }
     const totalGrade = grades.reduce(
       (total: number, curGrade: number) => total + curGrade,
       0
     );
-    if (totalGrade + grade > 200) {
+    if (assignmentType === '') {
       isError = true;
-      setError(true);
-      setErrorMessage((prevState) => ({
-        ...prevState,
-        grade: "The total grade can't be over 100",
-      }));
+      setError({ assignmentType: "Assignment Type can't be empty" });
+    } else if (Number.isNaN(grade)) {
+      isError = true;
+      setError({ grade: 'The total grade has to be a number' });
+    } else if (totalGrade + grade > 200) {
+      isError = true;
+      setError({ grade: "The total grade can't be over 100" });
     }
     if (!isError) {
       setAssignmentTypes((prevState) => [assignmentType, ...prevState]);
       setGrades((prevState) => [grade, ...prevState]);
-      setErrorMessage({});
     }
   };
   const createClassHandler = async () => {
+    setError({ grade: '', assignmentType: '', classTitle: '', teacher: '' });
     try {
-      const requestBody: classDto.CreateClassDto = {
-        name: classTitle,
-        teacher,
-        assignmentTypes: assignmentTypes.map((assignmentType, i) => ({
-          name: assignmentType,
-          percentOfGrade: grades[i],
-          currentGrade: grades[i],
-          pointsReceived: 0,
-          pointsWorth: 0,
-        })),
-      };
-      requestBody.assignmentTypes = requestBody.assignmentTypes.filter(
-        (assignType) => assignType.name !== 'Total'
+      const totalGrade = grades.reduce(
+        (total: number, curGrade: number) => total + curGrade,
+        0
       );
-      await postApi('/api/class', requestBody, token);
-      router.push('/classes');
+      let error = false;
+      if (classTitle === '') {
+        error = true;
+        setError({ classTitle: "Name can't be empty" });
+      } else if (teacher === '') {
+        error = true;
+        setError({ teacher: "Teacher can't be empty" });
+      } else if (totalGrade !== 200) {
+        error = true;
+        setError({ grade: 'The grades have to add up to 100%' });
+      }
+      if (!error) {
+        const requestBody: classDto.CreateClassDto = {
+          name: classTitle,
+          teacher,
+          assignmentTypes: assignmentTypes.map((assignmentType, i) => ({
+            name: assignmentType,
+            percentOfGrade: grades[i],
+            currentGrade: grades[i],
+            pointsReceived: 0,
+            pointsWorth: 0,
+          })),
+        };
+        requestBody.assignmentTypes = requestBody.assignmentTypes.filter(
+          (assignType) => assignType.name !== 'Total'
+        );
+        await postApi('/api/class', requestBody, token);
+        router.push('/classes');
+      }
     } catch (e) {
       console.log(e);
     }
@@ -106,6 +133,8 @@ const CreateClass = ({ token }: CreateClassProps) => {
               required
               fullWidth
               onChange={(e) => setClassTitle(e.target.value)}
+              error={!!errorMessages.classTitle}
+              helperText={errorMessages.classTitle}
             />
           </Grid>
           <Grid item>
@@ -115,6 +144,8 @@ const CreateClass = ({ token }: CreateClassProps) => {
               required
               fullWidth
               onChange={(e) => setTeacher(e.target.value)}
+              error={!!errorMessages.teacher}
+              helperText={errorMessages.teacher}
             />
           </Grid>
           <Grid item>
@@ -128,8 +159,8 @@ const CreateClass = ({ token }: CreateClassProps) => {
                 fullWidth
                 value={assignmentType}
                 onChange={(e) => setAssignmentType(e.target.value)}
-                error={!!errorMessage.assignmentType}
-                helperText={errorMessage.assignmentType}
+                error={!!errorMessages.assignmentType}
+                helperText={errorMessages.assignmentType}
               />
             </Grid>
             <Grid item xs={2}>
@@ -138,9 +169,9 @@ const CreateClass = ({ token }: CreateClassProps) => {
                 label="% of Grade"
                 fullWidth
                 value={grade}
-                onChange={(e) => setGrade(parseInt(e.target.value))}
-                error={!!errorMessage.grade}
-                helperText={errorMessage.grade}
+                onChange={(e) => setGrade(parseInt(e.target.value, 10))}
+                error={!!errorMessages.grade}
+                helperText={errorMessages.grade}
               />
             </Grid>
           </Grid>
