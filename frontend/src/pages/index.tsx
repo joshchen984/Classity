@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     },
     [theme.breakpoints.up('lg')]: {
       marginBottom: '8rem',
-      marginTop: '15rem',
+      marginTop: '12rem',
     },
   },
   getStarted: {
@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
       marginLeft: theme.spacing(10),
     },
     [theme.breakpoints.up('lg')]: {
-      fontSize: '2rem',
+      fontSize: '1.75rem',
     },
   },
   topPillar: {
