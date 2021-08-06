@@ -8,9 +8,22 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { assignmentDto, classDto } from '@classity/dto';
+import validator from 'validator';
 import RoundButton from '../RoundButton';
 import { postApi } from '../../app/requestApi';
 
+type ErrorMessages = {
+  name: string;
+  curAssignmentType: string;
+  pointsReceived: string;
+  pointsPossible: string;
+};
+type ErrorMessageChanges = {
+  name?: string;
+  curAssignmentType?: string;
+  pointsReceived?: string;
+  pointsPossible?: string;
+};
 const useStyles = makeStyles((theme) => ({
   title: {
     color: theme.palette.darkBlue.main,
@@ -39,19 +52,60 @@ const CreateAssignmentDialog = ({
   const [curAssignmentType, setCurAssignmentType] = useState<string>('');
   const [pointsReceived, setPointsReceived] = useState<string>('');
   const [pointsPossible, setPointsPossible] = useState<string>('');
-
+  const [errorMessages, setErrorMessages] = useState<ErrorMessages>({
+    name: '',
+    curAssignmentType: '',
+    pointsReceived: '',
+    pointsPossible: '',
+  });
+  const setError = (errors: ErrorMessageChanges) => {
+    setErrorMessages((prevState) => ({
+      ...prevState,
+      ...errors,
+    }));
+  };
   const addAssignmentHandler = async () => {
-    const requestBody: assignmentDto.CreateAssignmentDto = {
-      name,
-      description,
-      assignmentType: curAssignmentType,
-      pointsReceived: parseFloat(pointsReceived),
-      pointsWorth: parseInt(pointsPossible, 10),
-      classId,
-    };
-    await postApi('/api/assignment', requestBody, token);
-    await getClass();
-    onClose();
+    setErrorMessages({
+      name: '',
+      curAssignmentType: '',
+      pointsReceived: '',
+      pointsPossible: '',
+    });
+    let error = false;
+    if (name === '') {
+      error = true;
+      setError({ name: "Name can't be empty" });
+    } else if (curAssignmentType === '') {
+      error = true;
+      setError({ curAssignmentType: 'Select an assignment type' });
+    } else if (!validator.isDecimal(pointsReceived)) {
+      error = true;
+      setError({ pointsReceived: 'Points received must be a number' });
+    } else if (parseFloat(pointsReceived) < 0) {
+      error = true;
+      setError({ pointsReceived: "Points received can't be negative" });
+    } else if (!validator.isInt(pointsPossible)) {
+      error = true;
+      setError({ pointsPossible: 'Points possible must be an integer' });
+    } else if (parseInt(pointsPossible, 10) <= 0) {
+      error = true;
+      setError({
+        pointsPossible: "Points possible can't be smaller than or equal to 0",
+      });
+    }
+    if (!error) {
+      const requestBody: assignmentDto.CreateAssignmentDto = {
+        name,
+        description,
+        assignmentType: curAssignmentType,
+        pointsReceived: parseFloat(pointsReceived),
+        pointsWorth: parseInt(pointsPossible, 10),
+        classId,
+      };
+      await postApi('/api/assignment', requestBody, token);
+      await getClass();
+      onClose();
+    }
   };
   let selectOptions: JSX.Element | JSX.Element[] = <MenuItem>Loading</MenuItem>;
   if (assignmentTypes !== undefined) {
@@ -77,6 +131,8 @@ const CreateAssignmentDialog = ({
               fullWidth
               value={name}
               onChange={(e) => setName(e.target.value)}
+              error={!!errorMessages.name}
+              helperText={errorMessages.name}
             />
           </Grid>
           <Grid item>
@@ -102,6 +158,8 @@ const CreateAssignmentDialog = ({
               onChange={(e) => setCurAssignmentType(e.target.value)}
               fullWidth
               disabled={assignmentTypes === undefined}
+              error={!!errorMessages.curAssignmentType}
+              helperText={errorMessages.curAssignmentType}
             >
               {selectOptions}
             </TextField>
@@ -117,6 +175,8 @@ const CreateAssignmentDialog = ({
                 fullWidth
                 value={pointsReceived}
                 onChange={(e) => setPointsReceived(e.target.value)}
+                error={!!errorMessages.pointsReceived}
+                helperText={errorMessages.pointsReceived}
               />
             </Grid>
             <Grid item>
@@ -129,6 +189,8 @@ const CreateAssignmentDialog = ({
                 fullWidth
                 value={pointsPossible}
                 onChange={(e) => setPointsPossible(e.target.value)}
+                error={!!errorMessages.pointsPossible}
+                helperText={errorMessages.pointsPossible}
               />
             </Grid>
           </Grid>
