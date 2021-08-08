@@ -39,11 +39,12 @@ const Classes = ({ token }: ClassesProps) => {
           title={userClass.name}
           teacher={userClass.teacher}
           classLink={`/classes/${userClass.id}`}
-          grade={
-            userClass.assignmentTypes[userClass.assignmentTypes.length - 1]
-              .currentGrade
+          grade={userClass.grade}
+          numGrades={
+            userClass.assignments !== undefined
+              ? userClass.assignments.length
+              : 0
           }
-          numGrades={userClass.assignments.length}
           unenrollHandler={() => unenrollHandler(userClass.id)}
         />
       </Grid>

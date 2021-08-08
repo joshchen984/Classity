@@ -14,7 +14,10 @@ const useStyles = makeStyles((theme) => ({
   medium: {
     width: '3em',
     height: '3em',
-    fontSize: 35,
+    fontSize: '2rem',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '1.75rem',
+    },
   },
   large: {
     width: '5em',

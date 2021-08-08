@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import Grid from '@material-ui/core/Grid';
@@ -6,6 +6,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
 import HomePageNav from '../components/HomePageNav';
 import LoginDialog from '../components/Dialogs/LoginDialog';
 import SignupDialog from '../components/Dialogs/SignupDialog';
@@ -81,7 +83,14 @@ export default function Home() {
   const aboveMd = useMediaQuery(theme.breakpoints.up('md'));
   const [loginDialogOpen, setLoginDialogOpen] = useState<boolean>(false);
   const [signupDialogOpen, setSignupDialogOpen] = useState<boolean>(false);
+  const loggedIn = useSelector((state) => state.auth.loggedIn);
+  const router = useRouter();
 
+  useEffect(() => {
+    if (loggedIn) {
+      router.push('/classes');
+    }
+  }, [loggedIn]);
   const signupHandler = () => {
     setSignupDialogOpen(true);
     setLoginDialogOpen(false);
@@ -136,6 +145,7 @@ export default function Home() {
       </Grid>
     );
   }
+
   return (
     <>
       <LoginDialog

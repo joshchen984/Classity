@@ -6,6 +6,9 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 757,
     margin: 'auto',
   },
+  layoutContainer: {
+    padding: '0 2rem',
+  },
 }));
 
 type LayoutProps = {
@@ -13,7 +16,11 @@ type LayoutProps = {
 };
 const Layout = ({ children }: LayoutProps) => {
   const classes = useStyles();
-  return <div className={classes.layout}>{children}</div>;
+  return (
+    <div className={classes.layoutContainer}>
+      <div className={classes.layout}>{children}</div>
+    </div>
+  );
 };
 
 export default Layout;
