@@ -11,6 +11,7 @@ import ClassChart from '../../components/ClassChart';
 import { postApi } from '../../app/requestApi';
 import withUserAuth from '../../hoc/withUserAuth';
 import Layout from '../../components/Layout';
+import Title from '../../components/Typography/Title';
 
 type ErrorMessages = {
   classTitle: string;
@@ -120,9 +121,7 @@ const CreateClass = ({ token }: CreateClassProps) => {
       <LoggedInNav />
       <Layout>
         <Grid container direction="column">
-          <Grid item>
-            <Typography variant="h1">Add a Class</Typography>
-          </Grid>
+          <Title>Add a Class</Title>
           <Grid item>
             <hr />
           </Grid>
@@ -152,7 +151,7 @@ const CreateClass = ({ token }: CreateClassProps) => {
             <Typography variant="h2">Grades</Typography>
           </Grid>
           <Grid container item spacing={3}>
-            <Grid item xs={10}>
+            <Grid item xs={8} sm={8} md={10}>
               <TextField
                 type="text"
                 label="Assignment Type"
@@ -163,7 +162,7 @@ const CreateClass = ({ token }: CreateClassProps) => {
                 helperText={errorMessages.assignmentType}
               />
             </Grid>
-            <Grid item xs={2}>
+            <Grid item xs={4} sm={4} md={2}>
               <TextField
                 type="number"
                 label="% of Grade"

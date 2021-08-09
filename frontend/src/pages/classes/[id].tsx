@@ -14,6 +14,7 @@ import ClassChart from '../../components/ClassChart';
 import Assignment from '../../components/Assignment';
 import CreateAssignmentDialog from '../../components/Dialogs/CreateAssignmentDialog';
 import { deleteApi, getApi } from '../../app/requestApi';
+import Title from '../../components/Typography/Title';
 
 const useStyles = makeStyles((theme) => ({
   header: {
@@ -23,11 +24,6 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: '100%',
     overflowX: 'hidden',
     overflowY: 'hidden',
-  },
-  title: {
-    [theme.breakpoints.down('xs')]: {
-      fontSize: '3rem',
-    },
   },
   assignmentHeader: {
     [theme.breakpoints.down('xs')]: {
@@ -81,6 +77,7 @@ const Assignments = ({ token }: AssignmentsProps) => {
   };
 
   const formatDate = (date: Date): string => {
+    // date format options here https://date-fns.org/docs/format
     if (belowSm) {
       return format(date, 'MM/d/yy');
     }
@@ -122,11 +119,7 @@ const Assignments = ({ token }: AssignmentsProps) => {
       />
       <Layout>
         <Grid container direction="column">
-          <Grid item className={classes.typographyContainer}>
-            <Typography variant="h1" className={classes.title}>
-              {userClass?.name}
-            </Typography>
-          </Grid>
+          <Title>{userClass?.name}</Title>
           <Grid container item alignItems="center" className={classes.header}>
             <Grid item xs={12} sm={3}>
               <Circle size="large">

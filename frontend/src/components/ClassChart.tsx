@@ -1,6 +1,12 @@
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
-import { useTheme } from '@material-ui/core/styles';
+import { useTheme, makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  chart: {
+    maxWidth: '100%',
+  },
+}));
 
 type ClassChartProps = {
   labels: string[] | undefined;
@@ -9,6 +15,7 @@ type ClassChartProps = {
 };
 const ClassChart = ({ labels, grades, currentGrades }: ClassChartProps) => {
   const theme = useTheme();
+  const classes = useStyles();
   const datasets = [
     {
       label: '% of Grade',
@@ -27,7 +34,7 @@ const ClassChart = ({ labels, grades, currentGrades }: ClassChartProps) => {
     labels,
     datasets,
   };
-  return <Bar data={data} />;
+  return <Bar className={classes.chart} data={data} />;
 };
 ClassChart.defaultProps = {
   currentGrades: null,
