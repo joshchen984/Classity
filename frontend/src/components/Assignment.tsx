@@ -36,7 +36,7 @@ type AssignmentProps = {
   gradeReceived: number;
   assignmentType: string;
   createdAt: string;
-  deleteHandler: () => Promise<void>;
+  deleteHandler: () => void;
 };
 const Assignment = ({
   title,

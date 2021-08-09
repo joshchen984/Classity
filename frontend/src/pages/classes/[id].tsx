@@ -15,6 +15,7 @@ import Assignment from '../../components/Assignment';
 import CreateAssignmentDialog from '../../components/Dialogs/CreateAssignmentDialog';
 import { deleteApi, getApi } from '../../app/requestApi';
 import Title from '../../components/Typography/Title';
+import ConfirmationDialog from '../../components/Dialogs/ConfirmationDialog';
 
 const useStyles = makeStyles((theme) => ({
   header: {
@@ -38,6 +39,9 @@ type AssignmentsProps = {
 const Assignments = ({ token }: AssignmentsProps) => {
   const [createAssignmentDialogOpen, setCreateAssignmentDialogOpen] =
     useState<boolean>(false);
+  const [deleteAssignmentDialogOpen, setDeleteAssignmentDialogOpen] =
+    useState<boolean>(false);
+  const [deletedAssignmentId, setDeletedAssignmentId] = useState<string>('');
   const [userClass, setUserClass] = useState<classDto.Class>();
   const assignmentTypeLabels: string[] | undefined = useMemo(
     () =>
@@ -71,8 +75,9 @@ const Assignments = ({ token }: AssignmentsProps) => {
     );
     setUserClass(foundClass);
   };
-  const deleteAssignmentHandler = async (assignmentId: string) => {
-    await deleteApi(`/api/assignment/${classId}/${assignmentId}`, token);
+  const deleteAssignmentHandler = async () => {
+    await deleteApi(`/api/assignment/${classId}/${deletedAssignmentId}`, token);
+    setDeleteAssignmentDialogOpen(false);
     await getClass();
   };
 
@@ -98,7 +103,10 @@ const Assignments = ({ token }: AssignmentsProps) => {
         gradeWorth={assignment.pointsWorth}
         gradeReceived={assignment.pointsReceived}
         assignmentType={assignment.type}
-        deleteHandler={async () => deleteAssignmentHandler(assignment.id)}
+        deleteHandler={() => {
+          setDeleteAssignmentDialogOpen(true);
+          setDeletedAssignmentId(assignment.id);
+        }}
         createdAt={formatDate(new Date(assignment.createdAt))}
         key={assignment.id}
       />
@@ -108,6 +116,12 @@ const Assignments = ({ token }: AssignmentsProps) => {
     <>
       <LoggedInNav
         setCreateAssignmentDialogOpen={setCreateAssignmentDialogOpen}
+      />
+      <ConfirmationDialog
+        title="Delete Assignment?"
+        open={deleteAssignmentDialogOpen}
+        onClose={() => setDeleteAssignmentDialogOpen(false)}
+        onConfirm={deleteAssignmentHandler}
       />
       <CreateAssignmentDialog
         open={createAssignmentDialogOpen}

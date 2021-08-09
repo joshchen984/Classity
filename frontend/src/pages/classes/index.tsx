@@ -7,12 +7,16 @@ import LoggedInNav from '../../components/LoggedInNav';
 import { deleteApi, getApi } from '../../app/requestApi';
 import ClassComponent from '../../components/Class';
 import Layout from '../../components/Layout';
+import ConfirmationDialog from '../../components/Dialogs/ConfirmationDialog';
 
 type ClassesProps = {
   token: string;
 };
 const Classes = ({ token }: ClassesProps) => {
   const [userClasses, setUserClasses] = useState<classDto.Class[]>();
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
+  // used by unenroll handler to decide which id to delete
+  const [deletedClassId, setDeletedClassId] = useState<string>('');
 
   const getClasses = async () => {
     const response: classDto.Class[] = (await getApi(
@@ -27,8 +31,9 @@ const Classes = ({ token }: ClassesProps) => {
     }
   }, [token]);
 
-  const unenrollHandler = async (id: string) => {
-    await deleteApi(`/api/class/${id}`, token);
+  const unenrollHandler = async () => {
+    await deleteApi(`/api/class/${deletedClassId}`, token);
+    setDeleteDialogOpen(false);
     await getClasses();
   };
   let userClassesComponents = null;
@@ -45,13 +50,22 @@ const Classes = ({ token }: ClassesProps) => {
               ? userClass.assignments.length
               : 0
           }
-          unenrollHandler={() => unenrollHandler(userClass.id)}
+          unenrollHandler={() => {
+            setDeletedClassId(userClass.id);
+            setDeleteDialogOpen(true);
+          }}
         />
       </Grid>
     ));
   }
   return (
     <>
+      <ConfirmationDialog
+        open={deleteDialogOpen}
+        onClose={() => setDeleteDialogOpen(false)}
+        onConfirm={unenrollHandler}
+        title="Delete Class?"
+      />
       <LoggedInNav />
       <Layout>
         <Grid container direction="column">
