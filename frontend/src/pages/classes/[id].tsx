@@ -2,7 +2,8 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/router';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { classDto } from '@classity/dto';
 import { format } from 'date-fns';
 import LoggedInNav from '../../components/LoggedInNav';
@@ -17,6 +18,21 @@ import { deleteApi, getApi } from '../../app/requestApi';
 const useStyles = makeStyles((theme) => ({
   header: {
     marginBottom: '2rem',
+  },
+  typographyContainer: {
+    maxWidth: '100%',
+    overflowX: 'hidden',
+    overflowY: 'hidden',
+  },
+  title: {
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '3rem',
+    },
+  },
+  assignmentHeader: {
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '2rem',
+    },
   },
 }));
 type AssignmentsProps = {
@@ -48,6 +64,8 @@ const Assignments = ({ token }: AssignmentsProps) => {
   );
   const classes = useStyles();
   const router = useRouter();
+  const theme = useTheme();
+  const belowSm = useMediaQuery(theme.breakpoints.down('sm'));
   const classId = router.query.id as string;
 
   const getClass = async () => {
@@ -62,6 +80,12 @@ const Assignments = ({ token }: AssignmentsProps) => {
     await getClass();
   };
 
+  const formatDate = (date: Date): string => {
+    if (belowSm) {
+      return format(date, 'MM/d/yy');
+    }
+    return format(date, 'MMMM d, y');
+  };
   useEffect(() => {
     if (token) {
       getClass();
@@ -78,7 +102,7 @@ const Assignments = ({ token }: AssignmentsProps) => {
         gradeReceived={assignment.pointsReceived}
         assignmentType={assignment.type}
         deleteHandler={async () => deleteAssignmentHandler(assignment.id)}
-        createdAt={format(new Date(assignment.createdAt), 'MMMM d, y')}
+        createdAt={formatDate(new Date(assignment.createdAt))}
         key={assignment.id}
       />
     ));
@@ -98,16 +122,18 @@ const Assignments = ({ token }: AssignmentsProps) => {
       />
       <Layout>
         <Grid container direction="column">
-          <Grid item>
-            <Typography variant="h1">{userClass?.name}</Typography>
+          <Grid item className={classes.typographyContainer}>
+            <Typography variant="h1" className={classes.title}>
+              {userClass?.name}
+            </Typography>
           </Grid>
           <Grid container item alignItems="center" className={classes.header}>
-            <Grid item md={3}>
+            <Grid item xs={12} sm={3}>
               <Circle size="large">
                 {userClass ? `${userClass.grade.toFixed(2)}%` : 'N/A'}
               </Circle>
             </Grid>
-            <Grid item md={9}>
+            <Grid item xs={12} sm={9}>
               <ClassChart
                 labels={assignmentTypeLabels}
                 grades={assignmentTypeGrades}
@@ -115,8 +141,10 @@ const Assignments = ({ token }: AssignmentsProps) => {
               />
             </Grid>
           </Grid>
-          <Grid item>
-            <Typography variant="h2">Assignments</Typography>
+          <Grid item className={classes.typographyContainer}>
+            <Typography variant="h2" className={classes.assignmentHeader}>
+              Assignments
+            </Typography>
           </Grid>
           <Grid item>
             <hr />

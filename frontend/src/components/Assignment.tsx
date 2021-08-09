@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from 'react';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
+import { Grid, Typography, Hidden, useMediaQuery } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import AssignmentDialog from './Dialogs/AssignmentDialog';
 
@@ -23,6 +22,11 @@ const useStyles = makeStyles((theme) => ({
   },
   assignmentType: {
     fontSize: '1.2rem',
+  },
+  typographyContainer: {
+    maxWidth: '100%',
+    overflowX: 'hidden',
+    overflowY: 'hidden',
   },
 }));
 type AssignmentProps = {
@@ -66,31 +70,34 @@ const Assignment = ({
           setDialogOpen(false);
         }}
       />
-      <Grid item container lg={2} justifyContent="center" alignItems="center">
+      <Grid item container xs={2} justifyContent="center" alignItems="center">
         <Grid item>
           <Typography variant="subtitle2">
             {gradeReceived}/{gradeWorth}
           </Typography>
         </Grid>
       </Grid>
-      <Grid container item lg={7} direction="column">
-        <Grid item>
+      <Grid container item xs={7} direction="column">
+        <Grid item className={classes.typographyContainer}>
           <Typography
             onClick={() => setDialogOpen(true)}
             className={classes.title}
+            noWrap
           >
             {title}
           </Typography>
         </Grid>
-        <Grid item>
-          <Typography variant="subtitle1">{trimmedDesc}</Typography>
-        </Grid>
+        <Hidden xsDown>
+          <Grid item>
+            <Typography variant="subtitle1">{trimmedDesc}</Typography>
+          </Grid>
+        </Hidden>
       </Grid>
       <Grid
         container
         item
         direction="column"
-        lg={3}
+        xs={3}
         alignItems="flex-end"
         justifyContent="space-between"
       >
@@ -100,9 +107,11 @@ const Assignment = ({
             {assignmentType}
           </Typography>
         </Grid>
-        <Grid item>
-          <Typography variant="subtitle1">{`Created ${createdAt}`}</Typography>
-        </Grid>
+        <Hidden xsDown>
+          <Grid item>
+            <Typography variant="subtitle1">{`Created ${createdAt}`}</Typography>
+          </Grid>
+        </Hidden>
       </Grid>
     </Grid>
   );
