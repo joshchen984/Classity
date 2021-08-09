@@ -47,7 +47,12 @@ const CreateClass = ({ token }: CreateClassProps) => {
   const [grade, setGrade] = useState<number>(100);
   const [classTitle, setClassTitle] = useState<string>('');
   const [teacher, setTeacher] = useState<string>('');
-  const [errorMessages, setErrorMessages] = useState<ErrorMessages>({});
+  const [errorMessages, setErrorMessages] = useState<ErrorMessages>({
+    classTitle: '',
+    teacher: '',
+    grade: '',
+    assignmentType: '',
+  });
   const setError = (errors: ErrorMessageChanges) => {
     setErrorMessages((prevState) => ({
       ...prevState,
@@ -70,6 +75,9 @@ const CreateClass = ({ token }: CreateClassProps) => {
     } else if (totalGrade + grade > 200) {
       isError = true;
       setError({ grade: "The total grade can't be over 100" });
+    } else if (assignmentTypes.includes(assignmentType)) {
+      isError = true;
+      setError({ assignmentType: 'Assignment Type has to be unique' });
     }
     if (!isError) {
       setAssignmentTypes((prevState) => [assignmentType, ...prevState]);
