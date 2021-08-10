@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from 'react';
-import { Grid, Typography, Hidden, useMediaQuery } from '@material-ui/core';
+import { Grid, Typography, Hidden } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import AssignmentDialog from './Dialogs/AssignmentDialog';
 
@@ -66,7 +66,7 @@ const Assignment = ({
         gradeReceived={gradeReceived}
         gradeWorth={gradeWorth}
         deleteHandler={async () => {
-          await deleteHandler();
+          deleteHandler();
           setDialogOpen(false);
         }}
       />

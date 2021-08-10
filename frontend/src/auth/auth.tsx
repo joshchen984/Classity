@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import firebase from 'firebase/app';
+import { useAppDispatch } from '../app/hooks';
 import firebaseClient from './firebaseClient';
 import 'firebase/auth';
 import { login, logout } from './authSlice';
@@ -10,7 +10,7 @@ type AuthProviderProps = {
 };
 const AuthProvider = ({ children }: AuthProviderProps) => {
   firebaseClient();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   useEffect(
     () =>
       firebase.auth().onIdTokenChanged(async (curUser) => {

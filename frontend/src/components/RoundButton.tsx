@@ -7,7 +7,7 @@ import { PaletteColor } from '@material-ui/core/styles/createPalette';
 type StyleProps = {
   color: PaletteColor;
 };
-const useStyles = makeStyles<Theme, StyleProps>((theme) => ({
+const useStyles = makeStyles<Theme, StyleProps>(() => ({
   button: {
     borderRadius: '50em',
     backgroundColor: ({ color }) => color.main,

@@ -50,7 +50,13 @@ const AssignmentDialog = ({
 }: AssignmentDialogProps) => {
   const classes = useStyles();
   return (
-    <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
+    <Dialog
+      open={open}
+      onClose={onClose}
+      fullWidth
+      maxWidth="sm"
+      aria-labelledby="assignment dialog"
+    >
       <DialogTitle className={classes.title}>
         <Typography variant="h6">{title}</Typography>
         <IconButton className={classes.deleteButton} onClick={deleteHandler}>

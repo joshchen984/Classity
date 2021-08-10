@@ -1,6 +1,10 @@
 import { createTheme } from '@material-ui/core/styles';
 // import type { PaletteColor } from '@material-ui/core/styles';
 
+type Color = {
+  main: string;
+};
+
 const blue = '#55A6D8';
 const orange = '#E99B26';
 const darkBlue = '#004E79';
@@ -14,9 +18,9 @@ declare module '@material-ui/core/styles/createPalette' {
     brown: Palette['primary'];
   }
   interface PaletteOptions {
-    blue?: Palette['primary'];
-    orange?: Palette['primary'];
-    darkBlue?: Palette['primary'];
+    blue?: Color;
+    orange?: Color;
+    darkBlue?: Color;
     brown?: Palette['primary'];
   }
 }

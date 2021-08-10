@@ -17,7 +17,7 @@ function ElevationScroll({ children }: { children: React.ReactElement }) {
   });
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   appbar: {
     backgroundColor: '#fafafa',
   },

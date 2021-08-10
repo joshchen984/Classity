@@ -116,7 +116,13 @@ const CreateAssignmentDialog = ({
     ));
   }
   return (
-    <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
+    <Dialog
+      open={open}
+      onClose={onClose}
+      fullWidth
+      maxWidth="sm"
+      aria-labelledby="create-assignment-dialog"
+    >
       <DialogTitle className={classes.title}>Add Assignment</DialogTitle>
       <DialogContent>
         <Grid container direction="column">

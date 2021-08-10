@@ -54,8 +54,10 @@ const SignupDialog = ({ open, onClose }: SignupDialogProps) => {
         const { user } = await firebase
           .auth()
           .createUserWithEmailAndPassword(email, password);
-        const token: string = await user?.getIdToken();
-        await postApi('/api/auth/signup', { email }, token);
+        if (user) {
+          const token: string = await user.getIdToken();
+          await postApi('/api/auth/signup', { email }, token);
+        }
       }
     } catch (error) {
       if (error.code === 'auth/email-already-in-use') {

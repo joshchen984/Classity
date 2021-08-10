@@ -5,8 +5,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
+import { useAppSelector } from '../app/hooks';
 import HomePageNav from '../components/HomePageNav';
 import LoginDialog from '../components/Dialogs/LoginDialog';
 import SignupDialog from '../components/Dialogs/SignupDialog';
@@ -82,7 +82,7 @@ export default function Home() {
   const aboveMd = useMediaQuery(theme.breakpoints.up('md'));
   const [loginDialogOpen, setLoginDialogOpen] = useState<boolean>(false);
   const [signupDialogOpen, setSignupDialogOpen] = useState<boolean>(false);
-  const loggedIn = useSelector((state) => state.auth.loggedIn);
+  const loggedIn = useAppSelector((state) => state.auth.loggedIn);
   const router = useRouter();
 
   useEffect(() => {

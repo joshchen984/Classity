@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 import React, { useState } from 'react';
 import Head from 'next/head';
 import Grid from '@material-ui/core/Grid';
@@ -26,7 +27,7 @@ type ErrorMessageChanges = {
   grade?: string;
   assignmentType?: string;
 };
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   assignmentTypeButton: {
     borderRadius: '50em',
     margin: '1em 0',
@@ -122,6 +123,7 @@ const CreateClass = ({ token }: CreateClassProps) => {
         router.push('/classes');
       }
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.log(e);
     }
   };

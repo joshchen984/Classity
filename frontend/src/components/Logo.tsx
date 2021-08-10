@@ -32,7 +32,7 @@ const Logo = ({ onClickRoute }: LogoProps) => {
     <Grid item xs={2} sm={4} container alignItems="center">
       <Link href={onClickRoute}>
         <Button component="a" disableRipple style={{ textDecoration: 'none' }}>
-          <Image src="/logo.svg" width="50" height="50" />
+          <Image src="/logo.svg" width="50" height="50" alt="logo" />
           {logoText}
         </Button>
       </Link>
