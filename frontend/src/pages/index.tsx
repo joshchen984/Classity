@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
-import Image from 'next/image';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -148,6 +147,13 @@ export default function Home() {
 
   return (
     <>
+      <Head>
+        <title>Home | Classity</title>
+        <meta
+          name="description"
+          content="The best and easiest way for students to manage their grades. Easily calculate your grade without having to do any math. Get started now!"
+        />
+      </Head>
       <LoginDialog
         open={loginDialogOpen}
         onClose={() => setLoginDialogOpen(false)}

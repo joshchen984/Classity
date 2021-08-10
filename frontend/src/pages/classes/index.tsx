@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Head from 'next/head';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import { classDto } from '@classity/dto';
@@ -60,6 +61,9 @@ const Classes = ({ token }: ClassesProps) => {
   }
   return (
     <>
+      <Head>
+        <title>Your Classes | Classity</title>
+      </Head>
       <ConfirmationDialog
         open={deleteDialogOpen}
         onClose={() => setDeleteDialogOpen(false)}

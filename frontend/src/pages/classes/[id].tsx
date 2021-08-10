@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
@@ -114,6 +115,9 @@ const Assignments = ({ token }: AssignmentsProps) => {
   }
   return (
     <>
+      <Head>
+        <title>{userClass?.name} | Classity</title>
+      </Head>
       <LoggedInNav
         setCreateAssignmentDialogOpen={setCreateAssignmentDialogOpen}
       />

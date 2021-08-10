@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Head from 'next/head';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
@@ -126,6 +127,9 @@ const CreateClass = ({ token }: CreateClassProps) => {
   };
   return (
     <>
+      <Head>
+        <title>Create Class | Classity</title>
+      </Head>
       <LoggedInNav />
       <Layout>
         <Grid container direction="column">
