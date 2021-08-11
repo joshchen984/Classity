@@ -17,20 +17,22 @@
 
 - Create a /api/.env.development file and put this data in it.
 
-You will have to setup firebase authentication and put those values here.
+You will have to setup firebase authentication and put those values in the .env.development file.
 
 ```
 FIREBASE_PROJECT_ID=
 FIREBASE_PRIVATE_KEY=
 FIREBASE_CLIENT_EMAIL=
+
+MONGODB_URL=mongodb://localhost/classity
+MONGODB_USERNAME=
+MONGODB_PASSWORD=
 ```
 
 - There should only be one node_modules folder in the root directory
 
 ```bash
 # Run this in the root directory
-npm install
-npm run dto:build
 npm install
 ```
 

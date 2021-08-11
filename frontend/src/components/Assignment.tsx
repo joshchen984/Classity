@@ -77,7 +77,7 @@ const Assignment = ({
           </Typography>
         </Grid>
       </Grid>
-      <Grid container item xs={7} direction="column">
+      <Grid container item xs={6} direction="column">
         <Grid item className={classes.typographyContainer}>
           <Typography
             onClick={() => setDialogOpen(true)}
@@ -97,7 +97,7 @@ const Assignment = ({
         container
         item
         direction="column"
-        xs={3}
+        xs={4}
         alignItems="flex-end"
         justifyContent="space-between"
       >
