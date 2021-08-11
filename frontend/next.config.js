@@ -1,11 +1,20 @@
-module.exports = {
-  reactStrictMode: true,
-  async rewrites() {
-    return [
-      {
-        source: '/api/:path*',
-        destination: 'http://localhost:3001/api/:path*', // Proxy to Backend
+const { PHASE_DEVELOPMENT_SERVER } = require('next/constants');
+
+module.exports = (phase) => {
+  if (phase === PHASE_DEVELOPMENT_SERVER) {
+    return {
+      reactStrictMode: true,
+      async rewrites() {
+        return [
+          {
+            source: '/api/:path*',
+            destination: 'http://localhost:3001/api/:path*', // Proxy to Backend
+          },
+        ];
       },
-    ];
-  },
+    };
+  }
+  return {
+    reactStrictMode: true,
+  };
 };
