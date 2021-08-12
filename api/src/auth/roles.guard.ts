@@ -34,11 +34,12 @@ export class RolesGuard implements CanActivate {
     const request: Request = context.switchToHttp().getRequest();
     for (const role of roles) {
       if (this.isValidRole(role, request)) {
-        this.logger.log(`Client authenticated with role ${role}`);
         return true;
       }
     }
-    this.logger.log(`Client failed auth for route with roles: ${roles}`);
+    this.logger.log(
+      `Client failed auth for route with roles: ${roles} at route ${request.originalUrl}`,
+    );
     return false;
   }
 }

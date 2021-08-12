@@ -47,7 +47,9 @@ export class AuthService implements OnApplicationBootstrap {
       if (e.code === 11000) {
         throw new ConflictException('Username already exists');
       } else {
-        this.logger.error(`Can't add a user to mongodb`);
+        this.logger.error(
+          `Can't add a user to mongodb because of code ${e.code}`,
+        );
         throw new InternalServerErrorException();
       }
     }

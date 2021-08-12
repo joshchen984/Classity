@@ -59,3 +59,7 @@ npm install
 ```
 npm run start:dev
 ```
+
+## Development
+
+- Classity uses Prettier and eslint for linting
