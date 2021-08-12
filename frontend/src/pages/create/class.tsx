@@ -119,7 +119,7 @@ const CreateClass = ({ token }: CreateClassProps) => {
         requestBody.assignmentTypes = requestBody.assignmentTypes.filter(
           (assignType) => assignType.name !== 'Total'
         );
-        await postApi('/api/class', requestBody, token);
+        await postApi(`${process.env.API_URL}/class`, requestBody, token);
         router.push('/classes');
       }
     } catch (e) {

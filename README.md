@@ -29,6 +29,12 @@ MONGODB_USERNAME=
 MONGODB_PASSWORD=
 ```
 
+- Create a /frontend/env.local file and put this data in it
+
+```
+API_URL=localhost:3001
+```
+
 - There should only be one node_modules folder in the root directory
 
 ```bash

@@ -21,7 +21,7 @@ const Classes = ({ token }: ClassesProps) => {
 
   const getClasses = async () => {
     const response: classDto.Class[] = (await getApi(
-      '/api/class',
+      `${process.env.API_URL}/class`,
       token
     )) as unknown as classDto.Class[];
     setUserClasses(response);
@@ -33,7 +33,7 @@ const Classes = ({ token }: ClassesProps) => {
   }, [token]);
 
   const unenrollHandler = async () => {
-    await deleteApi(`/api/class/${deletedClassId}`, token);
+    await deleteApi(`${process.env.API_URL}/class/${deletedClassId}`, token);
     setDeleteDialogOpen(false);
     await getClasses();
   };

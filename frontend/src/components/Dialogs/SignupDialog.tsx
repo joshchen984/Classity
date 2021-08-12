@@ -56,7 +56,7 @@ const SignupDialog = ({ open, onClose }: SignupDialogProps) => {
           .createUserWithEmailAndPassword(email, password);
         if (user) {
           const token: string = await user.getIdToken();
-          await postApi('/api/auth/signup', { email }, token);
+          await postApi(`${process.env.API_URL}/auth/signup`, { email }, token);
         }
       }
     } catch (error) {

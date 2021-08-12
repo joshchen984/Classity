@@ -71,13 +71,16 @@ const Assignments = ({ token }: AssignmentsProps) => {
 
   const getClass = async () => {
     const foundClass: classDto.Class = await getApi(
-      `/api/class/${classId}`,
+      `${process.env.API_URL}/class/${classId}`,
       token
     );
     setUserClass(foundClass);
   };
   const deleteAssignmentHandler = async () => {
-    await deleteApi(`/api/assignment/${classId}/${deletedAssignmentId}`, token);
+    await deleteApi(
+      `${process.env.API_URL}/assignment/${classId}/${deletedAssignmentId}`,
+      token
+    );
     setDeleteAssignmentDialogOpen(false);
     await getClass();
   };
