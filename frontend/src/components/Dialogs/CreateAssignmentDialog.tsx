@@ -102,7 +102,11 @@ const CreateAssignmentDialog = ({
         pointsWorth: parseInt(pointsPossible, 10),
         classId,
       };
-      await postApi(`${process.env.API_URL}/assignment`, requestBody, token);
+      await postApi(
+        `${process.env.NEXT_PUBLIC_API_URL}/assignment`,
+        requestBody,
+        token
+      );
       await getClass();
       onClose();
     }
