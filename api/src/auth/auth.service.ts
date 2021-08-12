@@ -4,6 +4,7 @@ import {
   InternalServerErrorException,
   OnApplicationBootstrap,
   UnauthorizedException,
+  Logger,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -15,6 +16,7 @@ import * as admin from 'firebase-admin';
 
 @Injectable()
 export class AuthService implements OnApplicationBootstrap {
+  private readonly logger = new Logger(AuthService.name);
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>,
     private configService: ConfigService,
@@ -45,6 +47,7 @@ export class AuthService implements OnApplicationBootstrap {
       if (e.code === 11000) {
         throw new ConflictException('Username already exists');
       } else {
+        this.logger.error(`Can't add a user to mongodb`);
         throw new InternalServerErrorException();
       }
     }

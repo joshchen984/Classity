@@ -1,11 +1,16 @@
-import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
+import {
+  CanActivate,
+  ExecutionContext,
+  Injectable,
+  Logger,
+} from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { AuthService } from './auth.service';
 import { Role } from './roles.decorator';
 import { Request } from 'express';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
+  private readonly logger = new Logger(RolesGuard.name);
   constructor(private reflector: Reflector) {}
 
   isValidRole(role: Role, request: Request): boolean {
@@ -29,9 +34,11 @@ export class RolesGuard implements CanActivate {
     const request: Request = context.switchToHttp().getRequest();
     for (const role of roles) {
       if (this.isValidRole(role, request)) {
+        this.logger.log(`Client authenticated with role ${role}`);
         return true;
       }
     }
+    this.logger.log(`Client failed auth for route with roles: ${roles}`);
     return false;
   }
 }
