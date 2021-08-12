@@ -20,7 +20,7 @@
         "frontend:build": "npm run build --workspace frontend",
         "dto:build": "npm run build --workspace dto",
         "preinstall": "npm run dto:build",
-        "postinstall": "npm run build --workspace api && npm run frontend:build"
+        "postinstall": "npm run build --workspace api"
     },
     "dependencies": {
         "concurrently": "^6.2.0"
