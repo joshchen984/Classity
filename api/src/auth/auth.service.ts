@@ -31,7 +31,7 @@ export class AuthService implements OnApplicationBootstrap {
           .replace(/\\n/g, '\n'),
         clientEmail: this.configService.get('FIREBASE_CLIENT_EMAIL'),
       }),
-      databaseURL: 'https://classity-daac0-default-rtdb.firebaseio.com',
+      databaseURL: this.configService.get('FIREBASE_DB_URL'),
     };
     admin.initializeApp(firebaseOptions);
   }

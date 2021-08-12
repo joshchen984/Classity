@@ -1,13 +1,13 @@
 import firebase from 'firebase/app';
 
 const FIREBASE_CONFIG = {
-  apiKey: 'AIzaSyA9dyjLsaWTx7FmKiayu-piNVHiTsu6Vlg',
-  authDomain: 'classity-daac0.firebaseapp.com',
-  projectId: 'classity-daac0',
-  storageBucket: 'classity-daac0.appspot.com',
-  messagingSenderId: '961423566067',
-  appId: '1:961423566067:web:e4f56fbb2cf8fa05318386',
-  measurementId: 'G-3E8VDJXFS5',
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 export default function firebaseClient() {
   if (!firebase.apps.length) {
