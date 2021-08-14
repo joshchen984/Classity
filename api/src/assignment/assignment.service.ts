@@ -2,6 +2,7 @@ import {
   BadRequestException,
   Injectable,
   NotFoundException,
+  Logger,
 } from '@nestjs/common';
 import { assignmentDto } from '@classity/dto';
 import { Assignment } from './assignment.document';
@@ -12,6 +13,7 @@ import { MongoRepository } from 'typeorm';
 
 @Injectable()
 export class AssignmentService {
+  private readonly logger = new Logger(AssignmentService.name);
   constructor(
     @InjectRepository(User) private userRepository: MongoRepository<User>,
   ) {}
@@ -77,7 +79,7 @@ export class AssignmentService {
           if (userClass.assignments === undefined) {
             userClass.assignments = [assignment];
           } else {
-            userClass.assignments.push(assignment);
+            userClass.assignments.unshift(assignment);
           }
           this.updateGrade(
             userClass,
@@ -106,7 +108,6 @@ export class AssignmentService {
     assignmentId: string,
     userId: string,
   ) {
-    //TODO: Fix grade not updating properly
     const user: User = await this.userRepository.findOne({ id: userId });
     if (!user) {
       throw new NotFoundException();
