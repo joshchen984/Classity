@@ -35,7 +35,7 @@ MONGODB_PASSWORD=
 - You will have to use the same database values as the .env.development file
 
 ```
-NEXT_PUBLIC_API_URL=localhost:3001
+NEXT_PUBLIC_API_URL=/api
 
 NEXT_PUBLIC_FIREBASE_API_KEY=value
 NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=value
