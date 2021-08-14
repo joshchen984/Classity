@@ -11,6 +11,7 @@ import { assignmentDto, classDto } from '@classity/dto';
 import validator from 'validator';
 import RoundButton from '../RoundButton';
 import { postApi } from '../../app/requestApi';
+import { gaEvent } from '../../app/gtag';
 
 type ErrorMessages = {
   name: string;
@@ -107,6 +108,7 @@ const CreateAssignmentDialog = ({
         requestBody,
         token
       );
+      gaEvent('create_assignment', {});
       await getClass();
       onClose();
     }

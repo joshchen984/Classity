@@ -14,6 +14,7 @@ import { postApi } from '../../app/requestApi';
 import withUserAuth from '../../hoc/withUserAuth';
 import Layout from '../../components/Layout';
 import Title from '../../components/Typography/Title';
+import { gaEvent } from '../../app/gtag';
 
 type ErrorMessages = {
   classTitle: string;
@@ -124,6 +125,7 @@ const CreateClass = ({ token }: CreateClassProps) => {
           requestBody,
           token
         );
+        gaEvent('create_class', {});
         router.push('/classes');
       }
     } catch (e) {

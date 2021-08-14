@@ -17,6 +17,7 @@ import CreateAssignmentDialog from '../../components/Dialogs/CreateAssignmentDia
 import { deleteApi, getApi } from '../../app/requestApi';
 import Title from '../../components/Typography/Title';
 import ConfirmationDialog from '../../components/Dialogs/ConfirmationDialog';
+import { gaEvent } from '../../app/gtag';
 
 const useStyles = makeStyles((theme) => ({
   header: {
@@ -81,6 +82,7 @@ const Assignments = ({ token }: AssignmentsProps) => {
       `${process.env.NEXT_PUBLIC_API_URL}/assignment/${classId}/${deletedAssignmentId}`,
       token
     );
+    gaEvent('delete_assignment', {});
     setDeleteAssignmentDialogOpen(false);
     await getClass();
   };

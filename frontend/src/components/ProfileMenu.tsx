@@ -2,6 +2,7 @@ import React from 'react';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import firebase from 'firebase/app';
+import { gaEvent } from '../app/gtag';
 
 type ProfileMenuProps = {
   anchorEl: null | HTMLElement;
@@ -14,6 +15,7 @@ const ProfileMenu = ({ anchorEl, setAnchorEl }: ProfileMenuProps) => {
   };
   const logoutHandler = async () => {
     await firebase.auth().signOut();
+    gaEvent('logout', {});
   };
   return (
     <Menu
