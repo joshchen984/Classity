@@ -3,6 +3,7 @@ import React from 'react';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheets } from '@material-ui/core/styles';
 import theme from '../theme';
+import { GA_TRACKING_ID } from '../app/gtag';
 
 export default class MyDocument extends Document {
   render() {
@@ -20,6 +21,24 @@ export default class MyDocument extends Document {
           <link
             href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,500;0,700;1,300;1,500;1,700&display=swap"
             rel="stylesheet"
+          />
+          {/* Global Site Tag (gtag.js) - Google Analytics */}
+          <script
+            async
+            src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
+          />
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GA_TRACKING_ID}', {
+              cookie_flags: 'SameSite=None;Secure',
+              page_path: window.location.pathname,
+            });
+          `,
+            }}
           />
         </Head>
         <body>
