@@ -7,6 +7,7 @@ import validator from 'validator';
 import firebaseClient from '../../auth/firebaseClient';
 import AuthDialog from './AuthDialog';
 import { postApi } from '../../app/requestApi';
+import { gaEvent } from '../../app/gtag';
 
 type ErrorMessages = {
   email: string;
@@ -61,6 +62,7 @@ const SignupDialog = ({ open, onClose }: SignupDialogProps) => {
             { email },
             token
           );
+          gaEvent('sign_up', { method: 'Email Password' });
         }
       }
     } catch (error) {

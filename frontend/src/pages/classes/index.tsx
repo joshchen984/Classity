@@ -9,6 +9,7 @@ import { deleteApi, getApi } from '../../app/requestApi';
 import ClassComponent from '../../components/Class';
 import Layout from '../../components/Layout';
 import ConfirmationDialog from '../../components/Dialogs/ConfirmationDialog';
+import { gaEvent } from '../../app/gtag';
 
 type ClassesProps = {
   token: string;
@@ -37,6 +38,7 @@ const Classes = ({ token }: ClassesProps) => {
       `${process.env.NEXT_PUBLIC_API_URL}/class/${deletedClassId}`,
       token
     );
+    gaEvent('delete_class', {});
     setDeleteDialogOpen(false);
     await getClasses();
   };

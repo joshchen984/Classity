@@ -6,6 +6,7 @@ import 'firebase/auth';
 import validator from 'validator';
 import firebaseClient from '../../auth/firebaseClient';
 import AuthDialog from './AuthDialog';
+import { gaEvent } from '../../app/gtag';
 
 type ErrorMessages = {
   email: string;
@@ -52,6 +53,7 @@ const LoginDialog = ({ open, onClose }: LoginDialogProps) => {
       }
       if (!error) {
         await firebase.auth().signInWithEmailAndPassword(email, password);
+        gaEvent('login', { method: 'Email Password' });
       }
     } catch (error) {
       if (error.code === 'auth/user-not-found') {

@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Grid, Typography, Hidden } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import AssignmentDialog from './Dialogs/AssignmentDialog';
+import { gaEvent } from '../app/gtag';
 
 const useStyles = makeStyles((theme) => ({
   assignment: {
@@ -80,7 +81,10 @@ const Assignment = ({
       <Grid container item xs={6} direction="column">
         <Grid item className={classes.typographyContainer}>
           <Typography
-            onClick={() => setDialogOpen(true)}
+            onClick={() => {
+              gaEvent('view_assignment', {});
+              setDialogOpen(true);
+            }}
             className={classes.title}
             noWrap
           >
