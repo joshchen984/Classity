@@ -78,7 +78,7 @@ const HomePageNav = ({ loginHandler, signupHandler }: HomePageNavProps) => {
           </Toolbar>
         </AppBar>
       </ElevationScroll>
-      {/* <div className={classes.toolbarMargin} /> */}
+      <div className={classes.toolbarMargin} />
     </>
   );
 };

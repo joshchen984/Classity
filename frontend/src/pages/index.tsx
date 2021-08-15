@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
+import Image from 'next/image';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -10,24 +11,27 @@ import { useAppSelector } from '../app/hooks';
 import HomePageNav from '../components/HomePageNav';
 import LoginDialog from '../components/Dialogs/LoginDialog';
 import SignupDialog from '../components/Dialogs/SignupDialog';
+import ClassPagePicture from '../../public/class-page.png';
 
 const useStyles = makeStyles((theme) => ({
   title: {
     textAlign: 'center',
-    marginTop: '8rem',
     marginBottom: '4rem',
     [theme.breakpoints.up('md')]: {
       textAlign: 'left',
-      marginLeft: theme.spacing(10),
+      marginLeft: theme.spacing(8),
     },
     [theme.breakpoints.up('lg')]: {
-      marginBottom: '8rem',
-      marginTop: '12rem',
+      marginBottom: '4rem',
+      marginLeft: theme.spacing(10),
+    },
+    [theme.breakpoints.down('md')]: {
+      fontSize: '3rem',
     },
   },
   getStarted: {
     borderRadius: '50em',
-    fontSize: '1.5rem',
+    fontSize: '1.25rem',
     backgroundColor: theme.palette.brown.main,
     color: 'white',
     fontWeight: 'bold',
@@ -35,44 +39,32 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: theme.palette.brown.dark,
     },
     [theme.breakpoints.up('md')]: {
-      marginLeft: theme.spacing(10),
+      marginLeft: theme.spacing(8),
     },
     [theme.breakpoints.up('lg')]: {
-      fontSize: '1.75rem',
+      fontSize: '1.5rem',
+      marginLeft: theme.spacing(10),
     },
   },
   description: {
     textAlign: 'center',
     marginBottom: '3rem',
+    lineHeight: 1.5,
     [theme.breakpoints.up('md')]: {
       fontSize: '1.5rem',
       textAlign: 'left',
-      marginLeft: theme.spacing(10),
+      marginLeft: theme.spacing(8),
     },
     [theme.breakpoints.up('lg')]: {
-      fontSize: '1.75rem',
+      marginLeft: theme.spacing(10),
     },
   },
-  topPillar: {
-    height: '50vh',
-    [theme.breakpoints.down('lg')]: {
-      width: '20rem',
-    },
-  },
-  bottomPillar: {
-    height: '50vh',
-    marginTop: '50vh',
-    [theme.breakpoints.down('md')]: {
-      display: 'none',
-    },
-    [theme.breakpoints.down('lg')]: {
-      width: '20rem',
-    },
-  },
-  pillarContainer: {
-    margin: 0,
-    padding: 0,
+  imageContainer: {
     position: 'relative',
+    [theme.breakpoints.down('md')]: {
+      height: '500px',
+      marginTop: theme.spacing(4),
+    },
   },
 }));
 
@@ -94,56 +86,6 @@ export default function Home() {
     setSignupDialogOpen(true);
     setLoginDialogOpen(false);
   };
-
-  let output = (
-    <Grid
-      container
-      direction="column"
-      alignItems={!aboveMd ? 'center' : undefined}
-    >
-      <Grid item>
-        <Typography variant="h1" className={classes.title}>
-          Organize Your Grades
-        </Typography>
-      </Grid>
-      <Grid item>
-        <Typography variant="subtitle1" className={classes.description}>
-          A platform for students to manage their grades easily. Never worry
-          about your grades again.
-        </Typography>
-      </Grid>
-      <Grid item>
-        <Button
-          variant="contained"
-          className={classes.getStarted}
-          onClick={signupHandler}
-        >
-          Get Started
-        </Button>
-      </Grid>
-    </Grid>
-  );
-  if (aboveMd) {
-    output = (
-      <Grid container>
-        <Grid item lg={6} md={7}>
-          {output}
-        </Grid>
-        <Grid container item lg={6} md={5} justifyContent="flex-end">
-          <img
-            src="/pillarTop.svg"
-            alt="top pillar"
-            className={classes.topPillar}
-          />
-          <img
-            src="/pillarBottom.svg"
-            alt="bottom pillar"
-            className={classes.bottomPillar}
-          />
-        </Grid>
-      </Grid>
-    );
-  }
 
   return (
     <>
@@ -169,7 +111,51 @@ export default function Home() {
         }}
         signupHandler={signupHandler}
       />
-      {output}
+      <Grid container>
+        <Grid
+          container
+          item
+          xs={12}
+          md={6}
+          direction="column"
+          alignItems={!aboveMd ? 'center' : undefined}
+        >
+          <Grid item>
+            <Typography variant="h1" className={classes.title}>
+              Calculate Your Class Grade
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Typography variant="subtitle1" className={classes.description}>
+              Want to keep track of your class grade, get a sense of what your
+              final grade will be and the grades you&apos;ll need to improve it?
+              <br />
+              <br />
+              Whether you’re in high school or graduate school, our easy-to-use
+              grade calculator will help you stay on top of your grades in just
+              a few minutes!
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Button
+              variant="contained"
+              className={classes.getStarted}
+              onClick={signupHandler}
+            >
+              Sign Up
+            </Button>
+          </Grid>
+        </Grid>
+        <Grid item xs={12} md={6} className={classes.imageContainer}>
+          <Image
+            src={ClassPagePicture}
+            alt="Picture of Class Page"
+            quality={100}
+            layout="fill"
+            objectFit="contain"
+          />
+        </Grid>
+      </Grid>
     </>
   );
 }
