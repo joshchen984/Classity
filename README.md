@@ -1,5 +1,9 @@
 # Classity
 
+Want to keep track of your class grade, get a sense of what your final grade will be and the grades you'll need to improve it?
+
+Whether you’re in high school or graduate school, this easy-to-use grade calculator will help you stay on top of your grades in just a few minutes!
+
 ## Folders
 
 | Folder                | Description             |
@@ -45,9 +49,10 @@ NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=value
 NEXT_PUBLIC_FIREBASE_APP_ID=value
 NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=value
 
+NEXT_PUBLIC_GA_ID=Google Analytics Id
 ```
 
-- There should only be one node_modules folder in the root directory
+- There should only be one node_modules folder in the root directory because I'm using [npm workspaces](https://docs.npmjs.com/cli/v7/using-npm/workspaces)
 
 ```bash
 # Run this in the root directory

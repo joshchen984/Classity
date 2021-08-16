@@ -61,9 +61,10 @@ const useStyles = makeStyles((theme) => ({
   },
   imageContainer: {
     position: 'relative',
-    [theme.breakpoints.down('md')]: {
-      height: '500px',
-      marginTop: theme.spacing(4),
+    height: '500px',
+    marginTop: theme.spacing(4),
+    [theme.breakpoints.up('md')]: {
+      height: '80vh',
     },
   },
 }));
