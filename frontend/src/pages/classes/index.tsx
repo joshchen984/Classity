@@ -57,7 +57,7 @@ const Classes = ({ token }: ClassesProps) => {
       </ul>
     </Grid>
   );
-  if (userClasses) {
+  if (userClasses && userClasses.length > 0) {
     userClassesComponents = userClasses.map((userClass) => (
       <Grid item key={userClass.id}>
         <ClassComponent
