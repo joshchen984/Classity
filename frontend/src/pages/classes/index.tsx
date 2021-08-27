@@ -11,12 +11,18 @@ import Layout from '../../components/Layout';
 import ConfirmationDialog from '../../components/Dialogs/ConfirmationDialog';
 import { gaEvent } from '../../app/gtag';
 
+const tutorialOptions: React.ReactNode[] = [
+  'Press the + icon in the top right to enter grades for a class.',
+  'Any grades entered will be saved.',
+];
+
 type ClassesProps = {
   token: string;
 };
 const Classes = ({ token }: ClassesProps) => {
   const [userClasses, setUserClasses] = useState<classDto.Class[]>();
   const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
+
   // used by unenroll handler to decide which id to delete
   const [deletedClassId, setDeletedClassId] = useState<string>('');
 
@@ -42,7 +48,15 @@ const Classes = ({ token }: ClassesProps) => {
     setDeleteDialogOpen(false);
     await getClasses();
   };
-  let userClassesComponents = null;
+  let userClassesComponents: JSX.Element | JSX.Element[] = (
+    <Grid item>
+      <ul>
+        {tutorialOptions.map((option) => (
+          <li>{option}</li>
+        ))}
+      </ul>
+    </Grid>
+  );
   if (userClasses) {
     userClassesComponents = userClasses.map((userClass) => (
       <Grid item key={userClass.id}>
