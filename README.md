@@ -65,6 +65,12 @@ npm install
 npm run start:dev
 ```
 
+To start mongodb database:
+
+```
+docker run --name mongodb -d -p 27017:27017 mongo
+```
+
 ## Development
 
 - Classity uses Prettier and eslint for linting
