@@ -52,7 +52,7 @@ const Classes = ({ token }: ClassesProps) => {
     <Grid item>
       <ul>
         {tutorialOptions.map((option) => (
-          <li>{option}</li>
+          <li key={option as string}>{option}</li>
         ))}
       </ul>
     </Grid>

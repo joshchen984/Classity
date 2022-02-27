@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { userDto } from '@classity/dto';
 import { Roles } from './roles.decorator';
@@ -15,5 +15,11 @@ export class AuthController {
     @UserId() userId: string,
   ) {
     return this.authService.signUp(createUserDto, userId);
+  }
+
+  @Roles('User')
+  @Delete('/delete')
+  deleteAccount(@UserId() userId: string) {
+    return this.authService.deleteAccount(userId);
   }
 }

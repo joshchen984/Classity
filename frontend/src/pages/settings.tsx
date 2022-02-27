@@ -8,11 +8,19 @@ import Layout from '../components/Layout';
 import Title from '../components/Typography/Title';
 import ClassityButton from '../components/ClassityButton';
 import ConfirmationDialog from '../components/Dialogs/ConfirmationDialog';
+import { deleteApi } from '../app/requestApi';
+import { logout } from '../auth/authSlice';
+import { useAppDispatch } from '../app/hooks';
 
-const Settings = () => {
+type SettingsProps = {
+  token: string;
+};
+const Settings = ({ token }: SettingsProps) => {
   const theme = useTheme();
-  const deleteAccountHandler = () => {
-    console.log('delete account');
+  const dispatch = useAppDispatch();
+  const deleteAccountHandler = async () => {
+    await deleteApi(`${process.env.NEXT_PUBLIC_API_URL}/auth/delete`, token);
+    dispatch(logout());
   };
   const [delAccountDialogOpen, setDelAccountDialogOpen] =
     useState<boolean>(false);

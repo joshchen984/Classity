@@ -55,6 +55,10 @@ export class AuthService implements OnApplicationBootstrap {
     }
     return createdUser;
   }
+  async deleteAccount(userId: string) {
+    await admin.auth().deleteUser(userId);
+    await this.userRepository.delete({ id: userId });
+  }
 
   async verifyIdToken(token: string) {
     try {
