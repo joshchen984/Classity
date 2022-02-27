@@ -74,3 +74,6 @@ docker run --name mongodb -d -p 27017:27017 mongo
 ## Development
 
 - Classity uses Prettier and eslint for linting
+- Frontend hosted on Netlify
+- API hosted on Heroku
+- Authentication handled by Firebase

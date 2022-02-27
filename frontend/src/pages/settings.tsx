@@ -11,6 +11,7 @@ import ConfirmationDialog from '../components/Dialogs/ConfirmationDialog';
 import { deleteApi } from '../app/requestApi';
 import { logout } from '../auth/authSlice';
 import { useAppDispatch } from '../app/hooks';
+import { gaEvent } from '../app/gtag';
 
 type SettingsProps = {
   token: string;
@@ -20,6 +21,7 @@ const Settings = ({ token }: SettingsProps) => {
   const dispatch = useAppDispatch();
   const deleteAccountHandler = async () => {
     await deleteApi(`${process.env.NEXT_PUBLIC_API_URL}/auth/delete`, token);
+    gaEvent('delete account', {});
     dispatch(logout());
   };
   const [delAccountDialogOpen, setDelAccountDialogOpen] =
